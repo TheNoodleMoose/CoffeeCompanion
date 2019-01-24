@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
 class App extends Component {
+  state = {
+    cool: 'Hello',
+  };
+
   render() {
+    const { cool } = this.state;
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit
+            {' '}
+            <code>src/App.js</code>
+            {' '}
+and save to reload.
           </p>
           <a
             className="App-link"
@@ -17,7 +25,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            {cool}
           </a>
         </header>
       </div>
