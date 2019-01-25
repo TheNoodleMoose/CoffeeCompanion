@@ -1,4 +1,9 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
+const exjwt = require('express-jwt');
+
+const jwtMW = exjwt({
+  secret: 'supersecret'
+});
 
 module.exports = (app) => {
   app.post('/register',

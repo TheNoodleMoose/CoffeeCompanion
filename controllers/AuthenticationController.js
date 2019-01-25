@@ -20,7 +20,11 @@ module.exports = {
     });
 
     if (dbUser === null) {
-      res.json(false);
+      res.status(401).json({
+        success: false,
+        err: 'Incorrect username/password',
+        token: null
+      });
     } else {
       if (dbUser.validPassword(password)) {
         const token = jwt.sign({ email: email }, 'supersecret', { expiresIn: '24h' });
@@ -29,6 +33,12 @@ module.exports = {
           err: null,
           token
         });
+      } else {
+        res.status(401).json({
+          success: false,
+          err: 'Incorrect username/password',
+          token: null
+        })
       }
 
     }
