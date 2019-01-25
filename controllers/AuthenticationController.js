@@ -1,4 +1,6 @@
 const db = require('../models');
+const jwt = require('jsonwebtoken');
+
 
 module.exports = {
   async register(req, res) {
@@ -20,10 +22,15 @@ module.exports = {
     if (dbUser === null) {
       res.json(false);
     } else {
+      if (dbUser.validPassword(password)) {
+        const token = jwt.sign({ email: email }, 'supersecret', { expiresIn: '24h' });
+        res.json({
+          success: true,
+          err: null,
+          token
+        });
+      }
 
-      const result = dbUser.validPassword(password);
-      console.log(result);
-      res.json(dbUser);
     }
   }
 };
