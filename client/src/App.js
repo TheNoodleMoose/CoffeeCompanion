@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
-
+import AuthenticationService from './services/AuthenticationService';
 import './App.css';
+
 
 class App extends Component {
   state = {
     cool: 'Hello',
   };
 
+  async componentDidMount() {
+    const response = await AuthenticationService.test();
+    const body = await response.json();
+
+    this.setState({
+      cool: body.message,
+    });
+  }
+
   render() {
     const { cool } = this.state;
     return (
       <div className="App">
         <header className="App-header">
-          <p>
-            Edit
-            {' '}
-            <code>src/App.js</code>
-            {' '}
-and save to reload.
-          </p>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -27,6 +30,7 @@ and save to reload.
           >
             {cool}
           </a>
+
         </header>
       </div>
     );
