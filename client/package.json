@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "axios": "^0.18.0",
+    "eslint-plugin-flowtype": "^3.2.1",
     "jwt-decode": "^2.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -31,7 +32,7 @@
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.15.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
     "eslint-plugin-react": "^7.12.4"
   }
 }
