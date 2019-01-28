@@ -4,13 +4,18 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   async register(req, res) {
-    const { email, password } = req.body;
+    console.log(req.body);
+    const { email, password, name } = req.body;
     const dbUser = await db.User.create({
       email: email,
+      name: name,
       password: password
     });
     console.log("User created: ", dbUser);
-    res.json("user created!");
+    res.json({
+      success: true,
+      err: null
+    });
   },
 
   async login(req, res) {
@@ -27,7 +32,8 @@ module.exports = {
       });
     } else {
       if (dbUser.validPassword(password)) {
-        const token = jwt.sign({ email: email }, 'supersecret', { expiresIn: '24h' });
+        const { name } = dbUser;
+        const token = jwt.sign({ name: name }, 'supersecret', { expiresIn: '24h' });
         res.json({
           success: true,
           err: null,

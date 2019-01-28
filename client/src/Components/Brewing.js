@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import AuthHelperMethods from '../services/AuthenticationService';
+import withAuth from './withAuth';
 
 class Brewing extends Component {
   state = {
@@ -30,6 +31,15 @@ class Brewing extends Component {
     ],
   };
 
+  Auth = new AuthHelperMethods();
+
+  componentDidMount() {
+    const userInfo = this.Auth.getConfirm();
+    this.setState({
+      username: userInfo.name,
+    });
+  }
+
   handleChange = (event) => {
     const { value, name } = event.target;
 
@@ -38,35 +48,24 @@ class Brewing extends Component {
     });
   };
 
-  redirect = () => {
-    this.setState({
-      redirect: true,
-    });
+  LogOut = () => {
+    this.Auth.logout();
+    this.props.history.replace('/login');
   };
 
-  LogOut = () => {
-    this.setState({
-      redirect: true,
-    });
-    const { logOut } = this.props;
-    logOut();
-  };
 
   render() {
-    const { currentUser } = this.props;
     const {
-      country, roaster, redirect, brewMethods,
+      country, roaster, brewMethods, username,
     } = this.state;
-    if (redirect) {
-      return <Redirect push to="/" />;
-    }
+
     return (
       <div>
         <LoginButton data-testid="login-button" type="button" onClick={this.LogOut}>
           Logout
         </LoginButton>
 
-        <h1 data-testid="users-intro">Hi {currentUser.name}!</h1>
+        <h1 data-testid="users-intro">Hi {username}!</h1>
         <h1>Let&apos;s brew an awesome cup of coffee!</h1>
         <form>
           {/* Country and Roaster Section */}
@@ -135,7 +134,7 @@ class Brewing extends Component {
   }
 }
 
-export default Brewing;
+export default withAuth(Brewing);
 
 const Card = styled.div`
   display: flex;
