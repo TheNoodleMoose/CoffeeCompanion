@@ -9,7 +9,7 @@ export default function withAuth(AuthComponent) {
     state = {
       confirm: null,
       loaded: false,
-    }
+    };
 
     /* In the componentDidMount, we would want to do a couple of
     important tasks in order to verify the current users authentication status

@@ -6,18 +6,32 @@ import Brewing from '../Components/Brewing';
 
 afterEach(cleanup);
 
-const currentUser = {
-  name: 'Austin',
+// const confirm = {
+//   name: 'Austin',
+// };
+
+// const userIntro = `Hi ${confirm.name}!`;
+
+const auth = {
+  loggedIn() {
+    return true;
+  },
+  getUser() {
+    return {
+      name: 'Austin',
+    };
+  },
 };
 
-const userIntro = `Hi ${currentUser.name}!`;
+const historyMock = { replace: jest.fn() };
 
 test('<Brewing>', () => {
-  const { debug, getByTestId } = render(
+  const { debug } = render(
     <MemoryRouter>
-      <Brewing currentUser={currentUser} />
+      <Brewing history={historyMock} auth={auth} />
     </MemoryRouter>,
   );
-  expect(getByTestId('users-intro').textContent).toBe(userIntro);
+  // expect(getByTestId('users-intro').textContent).toBe(userIntro);
+  expect(historyMock.replace.mock.calls[0]).toEqual(['/login']);
   debug();
 });

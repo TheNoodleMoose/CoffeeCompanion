@@ -8,5 +8,5 @@ afterEach(cleanup);
 test('<App>', () => {
   const { debug } = render(<App />);
 
-  debug();
+  // debug();
 });

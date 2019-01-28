@@ -16,7 +16,7 @@ const User = {
 };
 
 test('<Login>', () => {
-  const { debug, getByTestId, getByLabelText } = render(
+  const { getByTestId, getByLabelText } = render(
     <MemoryRouter>
       <Login submitFakeForm={onSubmit} />
     </MemoryRouter>,
@@ -49,5 +49,5 @@ test('<Login>', () => {
   //   password: User.password,
   // });
   //   Render it out with the logged in info
-  debug();
+  // debug();
 });
