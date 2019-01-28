@@ -1,4 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 .App {
+  font-family: "Nunito", sans-serif;
   text-align: center;
 }
 
@@ -8,8 +10,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #4e4640;
+  min-height: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
