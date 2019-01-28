@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect, Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Login extends Component {
   state = {
+    name: '',
     email: '',
     password: '',
   };
@@ -18,7 +19,6 @@ class Login extends Component {
 
   submitForm = (event) => {
     event.preventDefault();
-
     console.log(this.state);
     const { updateUser } = this.props;
     updateUser();
@@ -29,7 +29,9 @@ class Login extends Component {
 
   render() {
     const { submitFakeForm } = this.props;
-    const { email, password, redirect } = this.state;
+    const {
+      email, password, name, redirect,
+    } = this.state;
     if (redirect) {
       return <Redirect push to="/Brewing" />;
     }
@@ -37,12 +39,16 @@ class Login extends Component {
       <div>
         <CoffeeImage src="https://img.icons8.com/cotton/64/000000/cup.png" alt="coffee-mug" />
         <Card>
-          <h1>Log In</h1>
+          <h1>Sign Up</h1>
           <Form
             data-testid="login-form"
             // For Testing Switch || to &&
             onSubmit={this.submitForm || (() => submitFakeForm({ email, password }))}
           >
+            <InputField htmlFor="name">
+              Name
+              <Input id="name" value={name} name="name" onChange={this.handleChange} type="text" />
+            </InputField>
             <InputField htmlFor="email">
               Email
               <Input
@@ -65,13 +71,13 @@ class Login extends Component {
             </InputField>
 
             <LoginButton data-testid="login-button" type="submit">
-              Login
+              Sign Up
             </LoginButton>
           </Form>
         </Card>
-        <p>Don&apos;t Have An Account?</p>
-        <Link to="/">
-          <p>Sign Up Here</p>
+        <p>Have An Account?</p>
+        <Link to="/Login">
+          <p>Login Here!</p>
         </Link>
       </div>
     );
