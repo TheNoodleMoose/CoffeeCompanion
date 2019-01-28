@@ -8,16 +8,13 @@ import Brewing from './Components/Brewing';
 
 class App extends Component {
   state = {
-    cool: '',
     CurrentUser: {
       name: 'Christian',
     },
     loggedIn: false,
   };
 
-  async componentDidMount() {
-
-  }
+  async componentDidMount() {}
 
   updateUser = () => {
     this.setState({
@@ -36,7 +33,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <header className="App-header" />
+          <header data-testid="header" className="App-header" />
 
           <Switch>
             <Route
