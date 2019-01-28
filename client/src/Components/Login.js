@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AuthHelperFunctions from '../services/AuthenticationService';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
   };
+
+  Auth = new AuthHelperFunctions();
+
+  componentWillMount() {
+    if (this.Auth.loggedIn() === true) {
+      this.props.history.replace('/Brewing');
+    }
+  }
 
   handleChange = (event) => {
     const { value, name } = event.target;
@@ -16,23 +25,22 @@ class Login extends Component {
     });
   };
 
-  submitForm = (event) => {
+  submitForm = async (event) => {
     event.preventDefault();
 
     console.log(this.state);
-    const { updateUser } = this.props;
-    updateUser();
-    this.setState({
-      redirect: true,
-    });
+    const { email, password } = this.state;
+
+    const res = await this.Auth.login(email, password);
+    if (res.success === true) {
+      this.props.history.push('/Brewing');
+    }
   };
 
   render() {
     const { submitFakeForm } = this.props;
-    const { email, password, redirect } = this.state;
-    if (redirect) {
-      return <Redirect push to="/Brewing" />;
-    }
+    const { email, password } = this.state;
+
     return (
       <div>
         <CoffeeImage src="https://img.icons8.com/cotton/64/000000/cup.png" alt="coffee-mug" />

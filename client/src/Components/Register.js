@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import AuthHelperMethods from '../services/AuthenticationService';
 
-class Login extends Component {
+class Register extends Component {
   state = {
     name: '',
     email: '',
     password: '',
   };
+
+  Auth = new AuthHelperMethods();
+
+  componentWillMount() {
+    if (this.Auth.loggedIn() === true) {
+      this.props.history.replace('/Brewing');
+    }
+  }
 
   handleChange = (event) => {
     const { value, name } = event.target;
@@ -17,14 +27,23 @@ class Login extends Component {
     });
   };
 
-  submitForm = (event) => {
+  submitForm = async (event) => {
     event.preventDefault();
-    console.log(this.state);
-    const { updateUser } = this.props;
-    updateUser();
-    this.setState({
-      redirect: true,
+
+    const { name, email, password } = this.state;
+    const data = await axios.post('/register', {
+      name,
+      email,
+      password,
     });
+
+    const { success } = data.data;
+    if (success === true) {
+      const res = await this.Auth.login(email, password);
+      if (res.success === true) {
+        this.props.history.push('/Brewing');
+      }
+    }
   };
 
   render() {
@@ -76,7 +95,7 @@ class Login extends Component {
           </Form>
         </Card>
         <p>Have An Account?</p>
-        <Link to="/Login">
+        <Link to="/login">
           <p>Login Here!</p>
         </Link>
       </div>
@@ -84,7 +103,7 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;
 
 const Card = styled.div`
   display: flex;

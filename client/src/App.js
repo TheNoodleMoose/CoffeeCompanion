@@ -16,12 +16,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    const response = await AuthenticationService.test();
-    const body = await response.json();
 
-    this.setState({
-      cool: body.message,
-    });
   }
 
   updateUser = () => {
