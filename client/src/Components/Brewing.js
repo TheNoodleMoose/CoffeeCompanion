@@ -10,7 +10,7 @@ class Brewing extends Component {
     country: '',
     roaster: '',
     brew_method: '',
-    coffee_amount: '',
+    coffeeAmount: '',
     coffeeStrength: '15',
     coffeeCoarseness: '',
     brewMethods: [
@@ -114,6 +114,7 @@ class Brewing extends Component {
       roaster,
       brewMethods,
       username,
+      coffeeAmount,
       brewAmount,
       coffeeStrength,
       grindSizes,
@@ -195,7 +196,7 @@ class Brewing extends Component {
                   <AmountButton
                     id={amount.id}
                     value={amount.amount}
-                    name="coffee_amount"
+                    name="coffeeAmount"
                     onClick={this.handleChange}
                     type="radio"
                   />
@@ -208,6 +209,7 @@ class Brewing extends Component {
                 </div>
               ))}
             </ButtonContainer>
+            <h3>{coffeeAmount} Oz</h3>
           </Card>
 
           <Card>
