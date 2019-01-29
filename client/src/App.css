@@ -37,6 +37,12 @@
     0 -1px 3px rgba(0, 0, 0, 0.4) inset;
 }
 
+.rangeslider-horizontal .rangeslider__fill {
+  height: 100%;
+  background-color: #4e4640 !important;
+  border-radius: 10px;
+  top: 0;
+}
 .App-header {
   background-color: #4e4640;
   min-height: 10px;
@@ -46,17 +52,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
