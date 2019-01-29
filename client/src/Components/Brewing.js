@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 import AuthHelperMethods from '../services/AuthenticationService';
 import withAuth from './withAuth';
 
@@ -9,8 +11,8 @@ class Brewing extends Component {
     roaster: '',
     brew_method: '',
     coffee_amount: '',
-    coffee_strength: '',
-    coffee_coarseness: '',
+    coffeeStrength: '15',
+    coffeeCoarseness: '',
     brewMethods: [
       {
         id: 1,
@@ -27,6 +29,52 @@ class Brewing extends Component {
       {
         id: 4,
         name: 'Cold Brew',
+      },
+    ],
+    brewAmount: [
+      {
+        id: 1,
+        amount: 12,
+      },
+      {
+        id: 2,
+        amount: 24,
+      },
+      {
+        id: 3,
+        amount: 36,
+      },
+    ],
+    grindSizes: [
+      {
+        id: 1,
+        grind: 'Extra Coarse',
+        text: 'Slightly larger than kosher salt',
+      },
+      {
+        id: 2,
+        grind: 'Coarse',
+        text: 'Similar to kosher salt',
+      },
+      {
+        id: 3,
+        grind: 'Med-Coarse',
+        text: 'Coarse Sand',
+      },
+      {
+        id: 4,
+        grind: 'Medium',
+        text: 'Slightly smaller than table salt',
+      },
+      {
+        id: 5,
+        grind: 'Fine',
+        text: 'Slightly finer than sugar',
+      },
+      {
+        id: 6,
+        grind: 'Extra Fine',
+        text: 'Similar to powdered sugar',
       },
     ],
   };
@@ -48,16 +96,30 @@ class Brewing extends Component {
     });
   };
 
-  LogOut = () => {
-    this.Auth.logout();
-    this.props.history.replace('/login');
+  handleChangeHorizontal = (value) => {
+    this.setState({
+      coffeeStrength: value,
+    });
   };
 
+  LogOut = () => {
+    this.Auth.logout();
+    const { history } = this.props;
+    history.replace('/login');
+  };
 
   render() {
     const {
-      country, roaster, brewMethods, username,
+      country,
+      roaster,
+      brewMethods,
+      username,
+      brewAmount,
+      coffeeStrength,
+      grindSizes,
     } = this.state;
+
+    const formatg = value => `${value} g`;
 
     return (
       <div>
@@ -103,23 +165,23 @@ class Brewing extends Component {
               alt="question-country"
             />
             <h3>What brew method are we using?</h3>
-            <ButtonContainer>
+            <BrewMethodContainer>
               {brewMethods.map(method => (
                 <div key={method.id}>
-                  <RadioButton
-                    id="brew_method"
+                  <BrewMethodButton
+                    id={method.id}
                     value={method.name}
                     name="brew_method"
                     onClick={this.handleChange}
                     type="radio"
                   />
-                  <RadioLabel htmlFor="brew_method">
+                  <BrewMethodLabel htmlFor={method.id}>
                     <img src="https://img.icons8.com/small/32/000000/temperature.png" alt="temp" />
                     <span>{method.name}</span>
-                  </RadioLabel>
+                  </BrewMethodLabel>
                 </div>
               ))}
-            </ButtonContainer>
+            </BrewMethodContainer>
           </Card>
           <Card>
             <QuestionMark
@@ -127,7 +189,76 @@ class Brewing extends Component {
               alt="question-country"
             />
             <h3>How much coffee are we making?</h3>
+            <ButtonContainer>
+              {brewAmount.map(amount => (
+                <div key={amount.id}>
+                  <RadioButton
+                    id={amount.id}
+                    value={amount.amount}
+                    name="coffee_amount"
+                    onClick={this.handleChange}
+                    type="radio"
+                  />
+                  <BrewAmountLabel htmlFor={amount.id}>
+                    <span>{amount.amount}Oz</span>
+                    <img
+                      src={require(`../assets/images/${amount.amount}OzCup.svg`)}
+                      alt="coffee-mug-amount"
+                    />
+                  </BrewAmountLabel>
+                </div>
+              ))}
+            </ButtonContainer>
           </Card>
+
+          <Card>
+            <QuestionMark
+              src="https://img.icons8.com/ios/50/000000/help.png"
+              alt="question-country"
+            />
+            <h3>How strong do you like your coffee?</h3>
+            <BrewStrengthContainer>
+              <Slider
+                min={15}
+                max={20}
+                value={parseFloat(coffeeStrength)}
+                format={formatg}
+                onChange={this.handleChangeHorizontal}
+              />
+              <MuscleImg
+                src="https://img.icons8.com/ios/50/000000/flex-biceps.png"
+                alt="how-strong"
+              />
+            </BrewStrengthContainer>
+            <h3>1: {coffeeStrength}g Coffee to water</h3>
+          </Card>
+          <Card>
+            <QuestionMark
+              src="https://img.icons8.com/ios/50/000000/help.png"
+              alt="question-country"
+            />
+            <h3>How fine are we grinding this?</h3>
+            <img src={require('../assets/images/coarse_bean.svg')} alt="coffee-bean" />
+            <GrindSizeContainer>
+              {grindSizes.map(grindSize => (
+                <div key={grindSize.id}>
+                  <GrindSizeButton
+                    id={grindSize.id}
+                    value={grindSize.grind}
+                    name="coffeeCoarseness"
+                    onClick={this.handleChange}
+                    type="radio"
+                  />
+                  <GrindSizeLabel htmlFor={grindSize.id}>
+                    <span>{grindSize.grind}</span>
+                    <GrindText>{grindSize.text}</GrindText>
+                  </GrindSizeLabel>
+                </div>
+              ))}
+            </GrindSizeContainer>
+          </Card>
+
+          <StartButton type="submit">Let&apos;s Get Brewing!</StartButton>
         </form>
       </div>
     );
@@ -141,7 +272,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 24px;
   padding: 10px;
   width: 300px;
   height: auto;
@@ -165,12 +296,27 @@ const Input = styled.input`
   width: 275px;
 `;
 
+const BrewMethodContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+`;
 const ButtonContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
 `;
 
-const RadioLabel = styled.label`
+const GrindSizeContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+`;
+
+const BrewStrengthContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const BrewMethodLabel = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -183,13 +329,58 @@ const RadioLabel = styled.label`
   margin: 5px;
 `;
 
-const RadioButton = styled.input`
+const BrewMethodButton = styled.input`
+  display: none;
   margin: 10px 0;
-  &:checked + ${RadioLabel} {
+  &:checked + ${BrewMethodLabel} {
     background: #67615a;
   }
 `;
 
+const BrewAmountLabel = styled.label`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #85817d;
+  font-weight: bold;
+  color: white;
+  width: 140px;
+  height: 60px;
+  border-radius: 15px;
+  margin: 5px;
+`;
+
+const RadioButton = styled.input`
+  margin: 10px 0;
+  &:checked + ${BrewAmountLabel} {
+    background: #67615a;
+  }
+`;
+const GrindSizeButton = styled.input`
+  margin: 10px 0;
+  &:checked + ${BrewAmountLabel} {
+    background: #67615a;
+  }
+`;
+
+const GrindSizeLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  justidtalign-items: center;
+  background-color: #67615a;
+  font-weight: bold;
+  color: white;
+  width: 125px;
+  height: 70px;
+  border-radius: 3px;
+  margin: 10px;
+`;
+
+const GrindText = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+`;
 const LoginButton = styled.button`
   background: #67615a;
   color: white;
@@ -202,7 +393,25 @@ const LoginButton = styled.button`
   height: 30px;
 `;
 
+const StartButton = styled.button`
+  background: #67615a;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 3px;
+  margin: 20px 0;
+  width: 200px;
+  height: 40px;
+`;
+
 const QuestionMark = styled.img`
   width: 20px;
   height: 20px;
+`;
+
+const MuscleImg = styled.img`
+  width: 38px;
+  height: 37px;
+  margin: 0 10px;
 `;
