@@ -13,7 +13,6 @@ export default class AuthHelperMethods {
     return Promise.resolve(res);
   };
 
-
   loggedIn = () => {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken(); // Getting token from localstorage
@@ -23,7 +22,8 @@ export default class AuthHelperMethods {
   isTokenExpired = (token) => {
     try {
       const decoded = decode(token);
-      if (decoded.exp < Date.now() / 1000) { // Checking if token is expired.
+      if (decoded.exp < Date.now() / 1000) {
+        // Checking if token is expired.
         return true;
       }
       return false;
@@ -39,7 +39,6 @@ export default class AuthHelperMethods {
   };
 
   getToken = () => localStorage.getItem('id_token');
-
 
   logout = () => {
     // Clear user token and profile data from localStorage
@@ -75,7 +74,8 @@ export default class AuthHelperMethods {
 
   checkStatus = (response) => {
     // raises an error in case response status is not a success
-    if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
+    if (response.status >= 200 && response.status < 300) {
+      // Success status lies between 200 to 300
       return response;
     }
     const error = new Error(response.statusText);
