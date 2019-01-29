@@ -33,46 +33,46 @@ class Brewing extends Component {
     ],
     brewAmount: [
       {
-        id: 1,
+        id: 5,
         amount: 12,
       },
       {
-        id: 2,
+        id: 6,
         amount: 24,
       },
       {
-        id: 3,
+        id: 7,
         amount: 36,
       },
     ],
     grindSizes: [
       {
-        id: 1,
+        id: 8,
         grind: 'Extra Coarse',
         text: 'Slightly larger than kosher salt',
       },
       {
-        id: 2,
+        id: 9,
         grind: 'Coarse',
         text: 'Similar to kosher salt',
       },
       {
-        id: 3,
+        id: 10,
         grind: 'Med-Coarse',
         text: 'Coarse Sand',
       },
       {
-        id: 4,
+        id: 11,
         grind: 'Medium',
         text: 'Slightly smaller than table salt',
       },
       {
-        id: 5,
+        id: 12,
         grind: 'Fine',
         text: 'Slightly finer than sugar',
       },
       {
-        id: 6,
+        id: 13,
         grind: 'Extra Fine',
         text: 'Similar to powdered sugar',
       },
@@ -352,13 +352,8 @@ const BrewAmountLabel = styled.label`
 `;
 
 const AmountButton = styled.input`
+  display: none;
   margin: 10px 0;
-`;
-const GrindSizeButton = styled.input`
-  margin: 10px 0;
-  &:checked + ${BrewAmountLabel} {
-    background: #67615a;
-  }
 `;
 
 const GrindSizeLabel = styled.label`
@@ -372,6 +367,13 @@ const GrindSizeLabel = styled.label`
   height: 70px;
   border-radius: 3px;
   margin: 10px;
+`;
+const GrindSizeButton = styled.input`
+  margin: 10px 0;
+  display: none;
+  &:checked + ${GrindSizeLabel} {
+    background: #85817d;
+  }
 `;
 
 const GrindText = styled.span`
