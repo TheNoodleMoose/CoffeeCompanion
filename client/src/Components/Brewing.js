@@ -192,7 +192,7 @@ class Brewing extends Component {
             <ButtonContainer>
               {brewAmount.map(amount => (
                 <div key={amount.id}>
-                  <RadioButton
+                  <AmountButton
                     id={amount.id}
                     value={amount.amount}
                     name="coffee_amount"
@@ -200,7 +200,6 @@ class Brewing extends Component {
                     type="radio"
                   />
                   <BrewAmountLabel htmlFor={amount.id}>
-                    <span>{amount.amount}Oz</span>
                     <img
                       src={require(`../assets/images/${amount.amount}OzCup.svg`)}
                       alt="coffee-mug-amount"
@@ -342,20 +341,16 @@ const BrewAmountLabel = styled.label`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: #85817d;
   font-weight: bold;
   color: white;
-  width: 140px;
+  width: 75px;
   height: 60px;
   border-radius: 15px;
-  margin: 5px;
+  margin: 10px;
 `;
 
-const RadioButton = styled.input`
+const AmountButton = styled.input`
   margin: 10px 0;
-  &:checked + ${BrewAmountLabel} {
-    background: #67615a;
-  }
 `;
 const GrindSizeButton = styled.input`
   margin: 10px 0;
