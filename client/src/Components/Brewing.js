@@ -119,7 +119,7 @@ class Brewing extends Component {
 
   calcInput = (output, strength) => {
     console.log(output, strength);
-    const coffeeInput = (parseFloat(output) * 29.57) / parseFloat(strength);
+    const coffeeInput = Math.floor((parseFloat(output) * 29.57) / parseFloat(strength));
     console.log(coffeeInput);
     this.setState({
       parameters: {

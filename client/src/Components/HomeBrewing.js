@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Brewing from './Brewing';
 import Setup from './Setup';
 import Timer from './Timer';
@@ -11,10 +12,16 @@ class HomeBrew extends Component {
     userParameters: {},
   };
 
-  handleParameterState = (props) => {
+  handleParameterState = async (props) => {
+    const Steps = await axios.post('/getsteps', {
+      BrewMethod: props.brewMethod,
+    });
+    console.log(props);
+    console.log(Steps);
     this.setState({
       CoffeeParameters: true,
       userParameters: props,
+      steps: Steps,
     });
   };
 
@@ -25,7 +32,7 @@ class HomeBrew extends Component {
   };
 
   render() {
-    const { CoffeeParameters, SetupComplete } = this.state;
+    const { CoffeeParameters, SetupComplete, steps } = this.state;
 
     if (SetupComplete) {
       return <Timer />;
@@ -34,6 +41,7 @@ class HomeBrew extends Component {
       return (
         <Setup
           handleSetupState={this.handleSetupState}
+          steps={steps.data.BrewSteps}
           userParameters={this.state.userParameters}
         />
       );
