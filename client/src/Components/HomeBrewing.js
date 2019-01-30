@@ -19,23 +19,8 @@ class HomeBrew extends Component {
   };
 
   handleSetupState = () => {
-    const { userParameters } = this.state;
-    const { coffeeOutput, coffeeStrength } = userParameters;
-    this.calcInput(coffeeOutput, coffeeStrength);
     this.setState({
       SetupComplete: true,
-    });
-  };
-
-  calcInput = (output, strength) => {
-    console.log(output, strength);
-    const coffeeInput = (parseFloat(output) * 29.57) / parseFloat(strength);
-    console.log(coffeeInput);
-    this.setState({
-      userParameters: {
-        ...this.state.userParameters,
-        coffeeInput,
-      },
     });
   };
 

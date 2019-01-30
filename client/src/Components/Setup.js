@@ -12,7 +12,7 @@ class Setup extends Component {
       },
       {
         id: 2,
-        StepTitle: 'Grind ${coffeeInput} of your coffee',
+        StepTitle: 'Grind ${coffeeInput}g of your coffee',
         SubText: 'Grind on ${grindSize}',
         photopath: 'Grinder',
       },
@@ -34,7 +34,8 @@ class Setup extends Component {
   componentWillMount() {
     const newSteps = this.state.steps.map((step) => {
       const { StepTitle, SubText } = step;
-      const { coffeeInput, grindSize } = this.props.userParameters;
+      const { grindSize, coffeeInput, coffeeStrength } = this.props.userParameters;
+
       const newStep = {
         ...step,
         StepTitle: eval(`\`${StepTitle}\``),

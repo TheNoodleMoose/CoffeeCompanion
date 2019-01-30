@@ -101,7 +101,6 @@ class Brewing extends Component {
     });
   };
 
-
   handleChangeHorizontal = (value) => {
     const { coffeeOutput, coffeeStrength } = this.state.parameters;
     this.setState({
@@ -109,7 +108,7 @@ class Brewing extends Component {
         ...this.state.parameters,
         coffeeStrength: value,
       },
-    });   
+    });
   };
 
   LogOut = () => {
@@ -118,20 +117,31 @@ class Brewing extends Component {
     history.replace('/login');
   };
 
+  calcInput = (output, strength) => {
+    console.log(output, strength);
+    const coffeeInput = (parseFloat(output) * 29.57) / parseFloat(strength);
+    console.log(coffeeInput);
+    this.setState({
+      parameters: {
+        ...this.state.parameters,
+        coffeeInput,
+      },
+    });
+  };
+
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { coffeeOutput, coffeeStrength } = this.state.parameters;
     const { handleParameterState } = this.props;
-    handleParameterState(this.state.parameters);
+    this.calcInput(coffeeOutput, coffeeStrength);
+    setTimeout(() => {
+      handleParameterState(this.state.parameters);
+    }, 20);
   };
 
   render() {
     const {
-      brewMethods,
-      username,
-      parameters,
-      brewAmount,
-      grindSizes,
+      brewMethods, username, parameters, brewAmount, grindSizes,
     } = this.state;
 
     const formatg = value => `${value} g`;
