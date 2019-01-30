@@ -12,8 +12,9 @@ class Login extends Component {
   Auth = new AuthHelperFunctions();
 
   componentWillMount() {
+    const { history } = this.props;
     if (this.Auth.loggedIn() === true) {
-      this.props.history.replace('/Brewing');
+      history.replace('/Brewing');
     }
   }
 
@@ -28,12 +29,12 @@ class Login extends Component {
   submitForm = async (event) => {
     event.preventDefault();
 
-    console.log(this.state);
     const { email, password } = this.state;
+    const { history } = this.props;
 
     const res = await this.Auth.login(email, password);
     if (res.success === true) {
-      this.props.history.push('/Brewing');
+      history.push('/Brewing');
     }
   };
 

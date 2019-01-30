@@ -1,57 +1,23 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AuthenticationService from './services/AuthenticationService';
 import './App.css';
 import Login from './Components/Login';
 import Register from './Components/Register';
-import Brewing from './Components/Brewing';
+import HomeBrewing from './Components/HomeBrewing';
 
 class App extends Component {
-  state = {
-    CurrentUser: {
-      name: 'Christian',
-    },
-    loggedIn: false,
-  };
-
-  async componentDidMount() {}
-
-  updateUser = () => {
-    this.setState({
-      loggedIn: true,
-    });
-  };
-
-  logOut = () => {
-    this.setState({
-      loggedIn: false,
-    });
-  };
+  state = {};
 
   render() {
-    const { CurrentUser } = this.state;
     return (
       <Router>
         <div className="App">
           <header data-testid="header" className="App-header" />
 
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <Register {...props} updateUser={this.updateUser} />}
-            />
-
-            <Route
-              path="/Login"
-              render={props => <Login {...props} updateUser={this.updateUser} />}
-            />
-            <Route
-              path="/Brewing"
-              render={props => (
-                <Brewing {...props} currentUser={CurrentUser} logOut={this.logOut} />
-              )}
-            />
+            <Route exact path="/" render={props => <Register {...props} />} />
+            <Route path="/Login" render={props => <Login {...props} />} />
+            <Route path="/Brewing" render={props => <HomeBrewing {...props} />} />
           </Switch>
         </div>
       </Router>
