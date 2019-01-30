@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 import AuthHelperMethods from '../services/AuthenticationService';
-import withAuth from './withAuth';
 
 class Brewing extends Component {
   state = {
-    country: '',
-    roaster: '',
-    brew_method: '',
-    coffeeAmount: '',
-    coffeeStrength: '15',
-    coffeeCoarseness: '',
+    parameters: {
+      country: '',
+      roaster: '',
+      brewMethod: '',
+      coffeeInput: '',
+      coffeeOutput: '12',
+      coffeeStrength: '15',
+      grindSize: '',
+    },
     brewMethods: [
       {
         id: 1,
@@ -90,16 +92,24 @@ class Brewing extends Component {
 
   handleChange = (event) => {
     const { value, name } = event.target;
-
+    const { coffeeOutput, coffeeStrength } = this.state.parameters;
     this.setState({
-      [name]: value,
+      parameters: {
+        ...this.state.parameters,
+        [name]: value,
+      },
     });
   };
 
+
   handleChangeHorizontal = (value) => {
+    const { coffeeOutput, coffeeStrength } = this.state.parameters;
     this.setState({
-      coffeeStrength: value,
-    });
+      parameters: {
+        ...this.state.parameters,
+        coffeeStrength: value,
+      },
+    });   
   };
 
   LogOut = () => {
@@ -108,15 +118,19 @@ class Brewing extends Component {
     history.replace('/login');
   };
 
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const { coffeeOutput, coffeeStrength } = this.state.parameters;
+    const { handleParameterState } = this.props;
+    handleParameterState(this.state.parameters);
+  };
+
   render() {
     const {
-      country,
-      roaster,
       brewMethods,
       username,
-      coffeeAmount,
+      parameters,
       brewAmount,
-      coffeeStrength,
       grindSizes,
     } = this.state;
 
@@ -130,7 +144,7 @@ class Brewing extends Component {
 
         <h1 data-testid="users-intro">Hi {username}!</h1>
         <h1>Let&apos;s brew an awesome cup of coffee!</h1>
-        <form>
+        <form onSubmit={this.handleFormSubmit}>
           {/* Country and Roaster Section */}
           <Card>
             <QuestionMark
@@ -142,7 +156,7 @@ class Brewing extends Component {
               Country, Region
               <Input
                 id="country"
-                value={country}
+                value={parameters.country}
                 name="country"
                 onChange={this.handleChange}
                 type="text"
@@ -152,7 +166,7 @@ class Brewing extends Component {
               Roaster
               <Input
                 id="roaster"
-                value={roaster}
+                value={parameters.roaster}
                 name="roaster"
                 onChange={this.handleChange}
                 type="text"
@@ -172,7 +186,7 @@ class Brewing extends Component {
                   <BrewMethodButton
                     id={method.id}
                     value={method.name}
-                    name="brew_method"
+                    name="brewMethod"
                     onClick={this.handleChange}
                     type="radio"
                   />
@@ -196,7 +210,7 @@ class Brewing extends Component {
                   <AmountButton
                     id={amount.id}
                     value={amount.amount}
-                    name="coffeeAmount"
+                    name="coffeeOutput"
                     onClick={this.handleChange}
                     type="radio"
                   />
@@ -209,7 +223,7 @@ class Brewing extends Component {
                 </div>
               ))}
             </ButtonContainer>
-            <h3>{coffeeAmount} Oz</h3>
+            <h3>{parameters.coffeeOutput} Oz</h3>
           </Card>
 
           <Card>
@@ -222,7 +236,7 @@ class Brewing extends Component {
               <Slider
                 min={15}
                 max={20}
-                value={parseFloat(coffeeStrength)}
+                value={parseFloat(parameters.coffeeStrength)}
                 format={formatg}
                 onChange={this.handleChangeHorizontal}
               />
@@ -231,7 +245,7 @@ class Brewing extends Component {
                 alt="how-strong"
               />
             </BrewStrengthContainer>
-            <h3>1: {coffeeStrength}g Coffee to water</h3>
+            <h3>1: {parameters.coffeeStrength}g Coffee to water</h3>
           </Card>
           <Card>
             <QuestionMark
@@ -246,7 +260,7 @@ class Brewing extends Component {
                   <GrindSizeButton
                     id={grindSize.id}
                     value={grindSize.grind}
-                    name="coffeeCoarseness"
+                    name="grindSize"
                     onClick={this.handleChange}
                     type="radio"
                   />
@@ -266,7 +280,7 @@ class Brewing extends Component {
   }
 }
 
-export default withAuth(Brewing);
+export default Brewing;
 
 const Card = styled.div`
   display: flex;
