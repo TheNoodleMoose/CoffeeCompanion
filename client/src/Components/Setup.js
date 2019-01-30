@@ -2,37 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 class Setup extends Component {
-  state = {
-    steps: [
-      {
-        id: 1,
-        StepTitle: 'Boil some water',
-        SubText: 'Boil more than you need',
-        photopath: 'Kettle',
-      },
-      {
-        id: 2,
-        StepTitle: 'Grind ${coffeeInput}g of your coffee',
-        SubText: 'Grind on ${grindSize}',
-        photopath: 'Grinder',
-      },
-      {
-        id: 3,
-        StepTitle: 'Wet your filter with hot water',
-        SubText: 'Dump the water out of your mug afterwards',
-        photopath: 'wetFilter',
-      },
-      {
-        id: 4,
-        StepTitle: 'Put the coffee grounds in the filter',
-        SubText: 'Make sure the bed is level in the filter',
-        photopath: 'fillFilter',
-      },
-    ],
-  };
+  state = {};
 
   componentWillMount() {
-    const newSteps = this.state.steps.map((step) => {
+    const newSteps = this.props.steps.map((step) => {
       const { StepTitle, SubText } = step;
       const { grindSize, coffeeInput, coffeeStrength } = this.props.userParameters;
 
@@ -47,6 +20,8 @@ class Setup extends Component {
       steps: newSteps,
     });
   }
+
+  componentDidMount() {}
 
   handleFormSubmit = (event) => {
     event.preventDefault();
@@ -63,7 +38,7 @@ class Setup extends Component {
         {steps.map(step => (
           <Card key={step.id}>
             <h3>{step.StepTitle}</h3>
-            <img src={require(`../assets/images/${step.photopath}.svg`)} alt={step.photopath} />
+            <img src={require(`../assets/images/${step.SvgPath}.svg`)} alt={step.SvgPath} />
             <h3>{step.SubText}</h3>
           </Card>
         ))}
