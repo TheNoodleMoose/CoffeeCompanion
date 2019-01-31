@@ -23,6 +23,19 @@ module.exports = {
     res.json(brewStep);
   },
 
+  async addTimeBrewStep(req, res) {
+    const { BrewingMethod, StepTitle, SvgPath, SubText } = req.body;
+    const brewStep = await db.BrewStep.create({
+      BrewingMethod,
+      StepTitle,
+      SvgPath,
+      SubText,
+      time
+    });
+
+    res.json(brewStep);
+  },
+
   async searchBrewSteps(req, res) {
     const { BrewMethod } = req.body;
     const brewSteps = await db.BrewMethod.findOne({
