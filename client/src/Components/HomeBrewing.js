@@ -35,7 +35,7 @@ class HomeBrew extends Component {
     const { CoffeeParameters, SetupComplete, steps } = this.state;
 
     if (SetupComplete) {
-      return <Timer />;
+      return <Timer userParameters={this.state.userParameters} />;
     }
     if (CoffeeParameters) {
       return (
