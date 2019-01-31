@@ -26,11 +26,11 @@ class Brewing extends Component {
       },
       {
         id: 3,
-        name: 'Kalita',
+        name: 'Kalita Wave',
       },
       {
         id: 4,
-        name: 'Cold Brew',
+        name: 'French Press',
       },
     ],
     brewAmount: [
