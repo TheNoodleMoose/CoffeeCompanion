@@ -117,7 +117,7 @@ const Card = styled.div`
   background-color: #f3f1ee;
   color: #2f2923;
   border-radius: 10px;
-  box-shadow: 1px 4px 21px 2px rgba(224, 208, 224, 1);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 `;
 
 const Form = styled.form`
@@ -151,6 +151,7 @@ const LoginButton = styled.button`
   margin: 20px 0;
   width: 150px;
   height: 30px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 `;
 
 const CoffeeImage = styled.img`
