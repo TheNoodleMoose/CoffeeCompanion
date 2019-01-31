@@ -27,6 +27,10 @@ module.exports = (app) => {
     BrewMethodsController.addBrewStep
   );
 
+  app.post('/addtimestep',
+    BrewMethodsController.addTimeBrewStep
+  );
+
   app.post('/getsteps',
     BrewMethodsController.searchBrewSteps
   )
