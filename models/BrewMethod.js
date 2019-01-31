@@ -17,5 +17,9 @@ module.exports = function (sequelize, DataTypes) {
     BrewMethod.hasMany(models.BrewStep, { foreignKey: 'BrewingMethod' });
   };
 
+  BrewMethod.associate = function (models) {
+    BrewMethod.hasMany(models.BrewTimedStep, { foreignKey: 'BrewingMethod' });
+  };
+
   return BrewMethod;
 };
