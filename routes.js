@@ -33,5 +33,9 @@ module.exports = (app) => {
 
   app.post('/getsteps',
     BrewMethodsController.searchBrewSteps
-  )
+  );
+
+  app.post('/gettimesteps',
+    BrewMethodsController.searchTimeBrewSteps
+  );
 };

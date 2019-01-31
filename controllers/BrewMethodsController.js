@@ -48,5 +48,19 @@ module.exports = {
     });
 
     res.json(brewSteps);
+  },
+
+  async searchTimeBrewSteps(req, res) {
+    const { BrewMethod } = req.body;
+    const brewSteps = await db.BrewMethod.findOne({
+      where: {
+        name: BrewMethod
+      },
+      include: [{
+        model: db.BrewTimedStep
+      }]
+    });
+
+    res.json(brewSteps);
   }
 }
