@@ -208,6 +208,7 @@ class Brewing extends Component {
               ))}
             </BrewMethodContainer>
           </Card>
+          {/* Coffee Amount Section */}
           <Card>
             <QuestionMark
               src="https://img.icons8.com/ios/50/000000/help.png"
@@ -235,7 +236,7 @@ class Brewing extends Component {
             </ButtonContainer>
             <h3>{parameters.coffeeOutput} Oz</h3>
           </Card>
-
+          {/* How Strong Do You Like Your Coffee Section */}
           <Card>
             <QuestionMark
               src="https://img.icons8.com/ios/50/000000/help.png"
@@ -257,6 +258,7 @@ class Brewing extends Component {
             </BrewStrengthContainer>
             <h3>1: {parameters.coffeeStrength}g Coffee to water</h3>
           </Card>
+          {/* How Fine Are We Grinding This? */}
           <Card>
             <QuestionMark
               src="https://img.icons8.com/ios/50/000000/help.png"
@@ -282,7 +284,7 @@ class Brewing extends Component {
               ))}
             </GrindSizeContainer>
           </Card>
-
+          {/* Start Button */}
           <StartButton type="submit">Let&apos;s Get Brewing!</StartButton>
         </form>
       </div>
@@ -304,7 +306,7 @@ const Card = styled.div`
   background-color: #f3f1ee;
   color: #2f2923;
   border-radius: 10px;
-  box-shadow: 1px 4px 21px 2px rgba(224, 208, 224, 1);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 `;
 
 const InputField = styled.label`
@@ -352,6 +354,7 @@ const BrewMethodLabel = styled.label`
   height: 40px;
   border-radius: 15px;
   margin: 5px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
 `;
 
 const BrewMethodButton = styled.input`
