@@ -12,25 +12,14 @@ module.exports = {
   },
 
   async addBrewStep(req, res) {
-    const { BrewingMethod, StepTitle, SvgPath, SubText } = req.body;
+    const { BrewingMethod, StepTitle, SvgPath, SubText, isTimedStep, time } = req.body;
     const brewStep = await db.BrewStep.create({
       BrewingMethod,
       StepTitle,
       SvgPath,
       SubText,
-    });
-
-    res.json(brewStep);
-  },
-
-  async addTimeBrewStep(req, res) {
-    const { BrewingMethod, StepTitle, SvgPath, SubText, time } = req.body;
-    const brewStep = await db.BrewTimedStep.create({
-      BrewingMethod,
-      StepTitle,
-      SvgPath,
-      SubText,
-      time,
+      isTimedStep,
+      time
     });
 
     res.json(brewStep);
@@ -45,6 +34,7 @@ module.exports = {
       include: [
         {
           model: db.BrewStep,
+          where: { isTimedStep: false }
         },
       ],
     });
@@ -60,7 +50,8 @@ module.exports = {
       },
       include: [
         {
-          model: db.BrewTimedStep,
+          model: db.BrewStep,
+          where: { isTimedStep: true }
         },
       ],
     });
