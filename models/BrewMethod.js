@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var BrewMethod = sequelize.define("BrewMethod", {
     // The email cannot be null, and must be a proper email before creation
     name: {
@@ -13,9 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     },
   });
 
-  BrewMethod.associate = function(models) {
+  BrewMethod.associate = function (models) {
     BrewMethod.hasMany(models.BrewStep, { foreignKey: "BrewingMethod" });
-    BrewMethod.hasMany(models.BrewTimedStep, { foreignKey: "BrewingMethod" });
   };
 
   return BrewMethod;
