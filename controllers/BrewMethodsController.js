@@ -1,11 +1,11 @@
-const db = require('../models');
+const db = require("../models");
 
 module.exports = {
   async addBrewMethod(req, res) {
     const { name, defaultGrindSize } = req.body;
     const brewMethod = await db.BrewMethod.create({
       name,
-      defaultGrindSize
+      defaultGrindSize,
     });
 
     res.json(brewMethod);
@@ -17,20 +17,20 @@ module.exports = {
       BrewingMethod,
       StepTitle,
       SvgPath,
-      SubText
+      SubText,
     });
 
     res.json(brewStep);
   },
 
   async addTimeBrewStep(req, res) {
-    const { BrewingMethod, StepTitle, SvgPath, SubText } = req.body;
-    const brewStep = await db.BrewStep.create({
+    const { BrewingMethod, StepTitle, SvgPath, SubText, time } = req.body;
+    const brewStep = await db.BrewTimedStep.create({
       BrewingMethod,
       StepTitle,
       SvgPath,
       SubText,
-      time
+      time,
     });
 
     res.json(brewStep);
@@ -40,11 +40,13 @@ module.exports = {
     const { BrewMethod } = req.body;
     const brewSteps = await db.BrewMethod.findOne({
       where: {
-        name: BrewMethod
+        name: BrewMethod,
       },
-      include: [{
-        model: db.BrewStep
-      }]
+      include: [
+        {
+          model: db.BrewStep,
+        },
+      ],
     });
 
     res.json(brewSteps);
@@ -54,13 +56,15 @@ module.exports = {
     const { BrewMethod } = req.body;
     const brewSteps = await db.BrewMethod.findOne({
       where: {
-        name: BrewMethod
+        name: BrewMethod,
       },
-      include: [{
-        model: db.BrewTimedStep
-      }]
+      include: [
+        {
+          model: db.BrewTimedStep,
+        },
+      ],
     });
 
     res.json(brewSteps);
-  }
-}
+  },
+};
