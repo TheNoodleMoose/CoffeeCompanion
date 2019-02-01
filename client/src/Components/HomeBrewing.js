@@ -25,18 +25,26 @@ class HomeBrew extends Component {
     });
   };
 
-  handleSetupState = () => {
+  handleSetupState = async () => {
+    const { brewMethod } = this.state.userParameters;
+    const Steps = await axios.post('/gettimesteps', {
+      BrewMethod: brewMethod,
+    });
+
     this.setState({
       SetupComplete: true,
+      timeSteps: Steps,
     });
   };
 
   render() {
-    const { CoffeeParameters, SetupComplete, steps } = this.state;
+    const {
+      CoffeeParameters, SetupComplete, steps, timeSteps,
+    } = this.state;
     const { history } = this.props;
 
     if (SetupComplete) {
-      return <Timer userParameters={this.state.userParameters} />;
+      return <Timer steps={timeSteps.data.BrewSteps} userParameters={this.state.userParameters} />;
     }
     if (CoffeeParameters) {
       return (
