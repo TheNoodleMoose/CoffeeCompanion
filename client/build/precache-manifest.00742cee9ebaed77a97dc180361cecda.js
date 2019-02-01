@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "a86356770d56fd96c92c3ed0c5f582d5",
-    "url": "/static/media/Grinder.a8635677.svg"
+    "revision": "92a5ed2894d3cd3a546719464126dbb9",
+    "url": "/static/media/FrPress.92a5ed28.svg"
   },
   {
-    "revision": "5f0621f077018b72d0b8",
+    "revision": "c5941ffd93d611c80cb8",
     "url": "/static/css/main.205c103f.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/static/media/wetFrPress.bc9c0c0a.svg"
   },
   {
-    "revision": "1d3e5b9eebadb51a7af7",
-    "url": "/static/js/1.1d3e5b9e.chunk.js"
+    "revision": "e1b9f0ece44435085d63",
+    "url": "/static/js/1.e1b9f0ec.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
@@ -36,8 +36,16 @@ self.__precacheManifest = [
     "url": "/static/media/coarse_bean.0cf23e15.svg"
   },
   {
-    "revision": "5f0621f077018b72d0b8",
-    "url": "/static/js/main.5f0621f0.chunk.js"
+    "revision": "e845bdb84311b5e62dc31308574920da",
+    "url": "/static/media/Clock.e845bdb8.svg"
+  },
+  {
+    "revision": "c5941ffd93d611c80cb8",
+    "url": "/static/js/main.c5941ffd.chunk.js"
+  },
+  {
+    "revision": "a86356770d56fd96c92c3ed0c5f582d5",
+    "url": "/static/media/Grinder.a8635677.svg"
   },
   {
     "revision": "a8d03f2d11021497dd43f1a0ff6da217",
@@ -64,11 +72,11 @@ self.__precacheManifest = [
     "url": "/static/media/wetFilter.f50b6ea1.svg"
   },
   {
-    "revision": "1d3e5b9eebadb51a7af7",
+    "revision": "e1b9f0ece44435085d63",
     "url": "/static/css/1.b528d91d.chunk.css"
   },
   {
-    "revision": "c96c9e0fb82411693d8d222c612ae290",
+    "revision": "36c7344753383e86f3dc6a2722ebb3ac",
     "url": "/index.html"
   }
 ];
