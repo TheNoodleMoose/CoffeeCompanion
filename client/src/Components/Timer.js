@@ -34,6 +34,23 @@ class Timer extends Component {
     ],
   };
 
+  componentWillMount() {
+    const newSteps = this.props.steps.map((step) => {
+      const { StepTitle, SubText } = step;
+      const { grindSize, coffeeOutput, coffeeStrength } = this.props.userParameters;
+
+      const newStep = {
+        ...step,
+        StepTitle: eval(`\`${StepTitle}\``),
+        SubText: eval(`\`${SubText}\``),
+      };
+      return newStep;
+    });
+    this.setState({
+      brewSteps: newSteps,
+    });
+  }
+
   componentDidMount() {
     this.UpdateSteps();
     this.getMinutes();
