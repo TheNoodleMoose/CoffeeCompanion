@@ -33,9 +33,10 @@ class HomeBrew extends Component {
 
   render() {
     const { CoffeeParameters, SetupComplete, steps } = this.state;
+    const { history } = this.props;
 
     if (SetupComplete) {
-      return <Timer />;
+      return <Timer userParameters={this.state.userParameters} />;
     }
     if (CoffeeParameters) {
       return (
@@ -46,7 +47,7 @@ class HomeBrew extends Component {
         />
       );
     }
-    return <Brewing handleParameterState={this.handleParameterState} />;
+    return <Brewing handleParameterState={this.handleParameterState} history={history} />;
   }
 }
 
