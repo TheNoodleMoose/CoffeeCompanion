@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
-const BrewMethodsController = require('./controllers/BrewMethodsController')
+const BrewMethodsController = require('./controllers/BrewMethodsController');
+const JournalEntryController = require('./controllers/JournalEntryController');
 const exjwt = require('express-jwt');
 
 const jwtMW = exjwt({
@@ -34,4 +35,12 @@ module.exports = (app) => {
   app.post('/gettimesteps',
     BrewMethodsController.searchTimeBrewSteps
   );
+
+  app.post('/journal',
+    JournalEntryController.addJournalEntry
+  );
+
+  app.get('/journal/:email',
+    JournalEntryController.getEntries
+  )
 };

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import AuthHelperMethods from '../services/AuthenticationService';
 
 class Timer extends Component {
   state = {
@@ -33,6 +35,8 @@ class Timer extends Component {
       },
     ],
   };
+
+  Auth = new AuthHelperMethods();
 
   componentWillMount() {
     const newSteps = this.props.steps.map((step) => {
@@ -112,6 +116,19 @@ class Timer extends Component {
     clearInterval(this.setIncrement);
   };
 
+  finishBrew = async () => {
+
+    const { userParameters } = this.props;
+    const { timer } = this.state;
+    const user = this.Auth.getConfirm();
+    console.log(user);
+    const data = await axios.post('/journal', {
+      userParameters,
+      timer,
+      user,
+    })
+  };
+
   render() {
     const { brewSteps, stage, timerStarted } = this.state;
     return (
@@ -130,6 +147,9 @@ class Timer extends Component {
           />
           <h3>{brewSteps[stage].SubText}</h3>
         </Card>
+        <StartButton type="button" onClick={this.finishBrew}>
+          Finish
+        </StartButton>
       </div>
     );
   }

@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
   };
 
   User.associate = function (models) {
-    User.hasMany(models.JournalEntry, { foreignKey: "email" });
+    User.hasMany(models.JournalEntry);
   };
 
   // Hooks are automatic methods that run during various phases of the User Model lifecycle
