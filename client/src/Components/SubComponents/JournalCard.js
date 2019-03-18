@@ -4,14 +4,14 @@ import moment from 'moment';
 
 const JournalCard = ({ entry }) => {
   const {
-    Coffee, Roaster, BrewMethod, GrindSize, CoffeeIn, CoffeeOut, BrewTime, createdAt,
+    Coffee, Roaster, BrewMethod, GrindSize, CoffeeIn, CoffeeOut, BrewTime, createdAt, CoffeeOunces,
   } = entry;
 
   return (
     <Container>
       <Card>
         <CoffeeText>{Coffee} ({Roaster})</CoffeeText>
-        <BrewMethodText>{BrewMethod}</BrewMethodText>
+        <BrewMethodText>{BrewMethod} ({CoffeeOunces}oz)</BrewMethodText>
         <GrindSizeText>{GrindSize}</GrindSizeText>
         <CoffeeGramText>{CoffeeIn}g / {CoffeeOut}g</CoffeeGramText>
         <BrewTimeText>{Math.floor(BrewTime / 60)}:{`0${BrewTime % 60}`.slice(-2)}</BrewTimeText>
@@ -35,6 +35,7 @@ const Card = styled.div`
   max-width: 384px;
   width: 95%;
   height: 115px;
+  margin-bottom: 24px;
   background: #F3F1EE;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   border-radius: 5px

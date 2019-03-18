@@ -24,7 +24,10 @@ module.exports = {
     const entries = await db.JournalEntry.findAll({
       where: {
         userEmail,
-      }
+      },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
     })
     res.json(entries);
   },

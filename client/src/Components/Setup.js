@@ -21,7 +21,7 @@ class Setup extends Component {
     });
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleFormSubmit = (event) => {
     event.preventDefault();
