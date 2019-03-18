@@ -44,13 +44,13 @@ class HomeBrew extends Component {
     const { history } = this.props;
 
     if (SetupComplete) {
-      return <Timer steps={timeSteps.data.BrewSteps} userParameters={this.state.userParameters} />;
+      return <Timer steps={timeSteps.data} userParameters={this.state.userParameters} />;
     }
     if (CoffeeParameters) {
       return (
         <Setup
           handleSetupState={this.handleSetupState}
-          steps={steps.data.BrewSteps}
+          steps={steps.data}
           userParameters={this.state.userParameters}
         />
       );

@@ -32,8 +32,8 @@ module.exports = {
       });
     } else {
       if (dbUser.validPassword(password)) {
-        const { name } = dbUser;
-        const token = jwt.sign({ name: name }, 'supersecret', { expiresIn: '24h' });
+        const { name, email } = dbUser;
+        const token = jwt.sign({ name: name, email: email }, 'supersecret', { expiresIn: '24h' });
         res.json({
           success: true,
           err: null,
