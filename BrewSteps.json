@@ -1,12 +1,12 @@
 {
-  "Hario V60": {
+  "Pour Over": {
     "defaultGrindSize": "Medium",
     "steps": [
       {
         "id": 1,
         "StepTitle": "Boil some water",
         "SvgPath": "Kettle",
-        "SubText": "Boil more than you need",
+        "SubText": "The water should be around 200\u00B0F jfkdls;jafkdsaj;fkldsjakl;j",
         "isTimedStep": false
       },
       {
@@ -18,7 +18,7 @@
       },
       {
         "id": 3,
-        "StepTitle": "Wet your filter with hot water",
+        "StepTitle": "Rinse your filter with hot water",
         "SvgPath": "wetFilter",
         "SubText": "Dump the water out afterwatrds",
         "isTimedStep": false
@@ -39,7 +39,7 @@
       },
       {
         "id": 1,
-        "StepTitle": "Quickly pour 50g of water",
+        "StepTitle": "Pour 50g of water",
         "SvgPath": "wetFilter",
         "SubText": "Make sure to evenly wet the coffee grounds",
         "isTimedStep": true,
@@ -55,185 +55,9 @@
       },
       {
         "id": 3,
-        "StepTitle": "Pour ${Math.floor((coffeeOutput * 29.57 -50)/2)}g of water",
+        "StepTitle": "Pour ${Math.floor(coffeeOutput * 29.57)}g of water",
         "SvgPath": "wetFilter",
-        "SubText": "Make sure to pour in even circles!",
-        "isTimedStep": true,
-        "time": 70
-      },
-      {
-        "id": 4,
-        "StepTitle": "Wait until the water level drops roughly an inch",
-        "SvgPath": "Clock",
-        "SubText": "It's always a great time to have coffee!",
-        "isTimedStep": true,
-        "time": 80
-      },
-      {
-        "id": 5,
-        "StepTitle": "Pour until you've reached ${Math.floor(coffeeOutput * 29.57)}g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Avoid hitting the walls of your filter",
-        "isTimedStep": true,
-        "time": 110
-      },
-      {
-        "id": 6,
-        "StepTitle": "Wait until the water stops dripping",
-        "SvgPath": "Clock",
-        "SubText": "Stop the timer when it's finished",
-        "isTimedStep": true,
-        "time": 125
-      }
-    ]
-  },
-  "Chemex": {
-    "defaultGrindSize": "Medium",
-    "steps": [
-      {
-        "id": 1,
-        "StepTitle": "Boil some water",
-        "SvgPath": "Kettle",
-        "SubText": "Boil more than you need",
-        "isTimedStep": false
-      },
-      {
-        "id": 2,
-        "StepTitle": "Grind ${coffeeInput}g of your coffee",
-        "SvgPath": "Grinder",
-        "SubText": "Grind on ${grindSize}",
-        "isTimedStep": false
-      },
-      {
-        "id": 3,
-        "StepTitle": "Wet your filter with hot water",
-        "SvgPath": "wetFilter",
-        "SubText": "Dump the water out afterwatrds",
-        "isTimedStep": false
-      },
-      {
-        "id": 4,
-        "StepTitle": "Put your coffee grounds in the filter",
-        "SvgPath": "fillFilter",
-        "SubText": "Make sure the bed of grounds is level",
-        "isTimedStep": false
-      },
-      {
-        "id": 5,
-        "StepTitle": "Tare your scale back to 0",
-        "SvgPath": "Scale",
-        "SubText": "Get ready to brew!",
-        "isTimedStep": false
-      },
-      {
-        "id": 1,
-        "StepTitle": "Quickly pour 50g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Make sure to evenly wet the coffee grounds",
-        "isTimedStep": true,
-        "time": 15
-      },
-      {
-        "id": 2,
-        "StepTitle": "Let stand for ~30 seconds",
-        "SvgPath": "Clock",
-        "SubText": "We're letting the coffee release it's gas",
-        "isTimedStep": true,
-        "time": 45
-      },
-      {
-        "id": 3,
-        "StepTitle": "Pour ${Math.floor((coffeeOutput * 29.57 -50)/2)}g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Make sure to pour in even circles!",
-        "isTimedStep": true,
-        "time": 70
-      },
-      {
-        "id": 4,
-        "StepTitle": "Wait until the water level drops roughly an inch",
-        "SvgPath": "Clock",
-        "SubText": "It's always a great time to have coffee!",
-        "isTimedStep": true,
-        "time": 80
-      },
-      {
-        "id": 5,
-        "StepTitle": "Pour until you've reached ${Math.floor(coffeeOutput * 29.57)}g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Avoid hitting the walls of your filter",
-        "isTimedStep": true,
-        "time": 110
-      },
-      {
-        "id": 6,
-        "StepTitle": "Wait until the water stops dripping",
-        "SvgPath": "Clock",
-        "SubText": "Stop the timer when it's finished",
-        "isTimedStep": true,
-        "time": 125
-      }
-    ]
-  },
-  "Kalita Wave": {
-    "defaultGrindSize": "Medium",
-    "steps": [
-      {
-        "id": 1,
-        "StepTitle": "Boil some water",
-        "SvgPath": "Kettle",
-        "SubText": "Boil more than you need",
-        "isTimedStep": false
-      },
-      {
-        "id": 2,
-        "StepTitle": "Grind ${coffeeInput}g of your coffee",
-        "SvgPath": "Grinder",
-        "SubText": "Grind on ${grindSize}",
-        "isTimedStep": false
-      },
-      {
-        "id": 3,
-        "StepTitle": "Wet your filter with hot water",
-        "SvgPath": "wetFilter",
-        "SubText": "Dump the water out afterwatrds",
-        "isTimedStep": false
-      },
-      {
-        "id": 4,
-        "StepTitle": "Put your coffee grounds in the filter",
-        "SvgPath": "fillFilter",
-        "SubText": "Make sure the bed of grounds is level",
-        "isTimedStep": false
-      },
-      {
-        "id": 5,
-        "StepTitle": "Tare your scale back to 0",
-        "SvgPath": "Scale",
-        "SubText": "Get ready to brew!",
-        "isTimedStep": false
-      },
-      {
-        "id": 1,
-        "StepTitle": "Quickly pour 50g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Make sure to evenly wet the coffee grounds",
-        "isTimedStep": true,
-        "time": 15
-      },
-      {
-        "id": 2,
-        "StepTitle": "Let stand for ~30 seconds",
-        "SvgPath": "Clock",
-        "SubText": "We're letting the coffee release it's gas",
-        "isTimedStep": true,
-        "time": 45
-      },
-      {
-        "id": 3,
-        "StepTitle": "Pour ${Math.floor((coffeeOutput * 29.57 -50)/2)}g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Make sure to pour in even circles!",
+        "SubText": "Start pouring from the center in a circular motion working your way outwards then back inwards\n\n Repeat this pattern until you've added the proper amount of water\n\n If the water level gets too high take a break from pouring\n\n Try to avoid pouring on the walls of the filter and having coffee grounds stick above the water line\n\n Aim to finish pouring between 2:00 and 2:30",
         "isTimedStep": true,
         "time": 70
       },
@@ -270,7 +94,7 @@
         "id": 1,
         "StepTitle": "Boil some water",
         "SvgPath": "Kettle",
-        "SubText": "Boil more than you need",
+        "SubText": "The water should be around 200\u00B0F",
         "isTimedStep": false
       },
       {

@@ -18,18 +18,10 @@ class Brewing extends Component {
     brewMethods: [
       {
         id: 1,
-        name: 'Chemex',
+        name: 'Pour Over',
       },
       {
         id: 2,
-        name: 'Hario V60',
-      },
-      {
-        id: 3,
-        name: 'Kalita Wave',
-      },
-      {
-        id: 4,
         name: 'French Press',
       },
     ],

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 import AuthHelperMethods from '../services/AuthenticationService';
+import CardCarousel from './SubComponents/CardCarousel';
 
 class Timer extends Component {
   state = {
     timerStarted: false,
     timer: 0,
     stage: 0,
+    finishedBrew: false,
+    blinking: false,
     brewSteps: [
       {
         id: 1,
@@ -61,16 +65,20 @@ class Timer extends Component {
     this.getSeconds();
   }
 
-  componentDidUpdate() {
-    this.UpdateSteps();
-  }
-
   UpdateSteps = () => {
     const { brewSteps, stage, timer } = this.state;
+    if (timer === brewSteps[stage].time - 10) {
+      console.log('Timer is has 10 sec left')
+      this.setState({
+        blinking: true,
+      });
+    }
+
     if (timer === brewSteps[stage].time && stage < brewSteps.length - 1) {
       console.log(brewSteps[stage]);
       this.setState({
         stage: stage + 1,
+        blinking: false,
       });
     }
   };
@@ -86,6 +94,7 @@ class Timer extends Component {
       this.setState(prevState => ({
         timer: prevState.timer + 1,
       }));
+      this.UpdateSteps();
     }, 1000);
   };
 
@@ -126,11 +135,22 @@ class Timer extends Component {
       userParameters,
       timer,
       user,
-    })
+    });
+
+    if (data) {
+      this.setState({
+        finishedBrew: true,
+      })
+    }
   };
 
   render() {
-    const { brewSteps, stage, timerStarted } = this.state;
+    const { brewSteps, stage, timerStarted, finishedBrew, blinking } = this.state;
+
+    if (finishedBrew === true) {
+      return <Redirect push to="/journal" />
+    }
+
     return (
       <div>
         <TimerText>
@@ -139,14 +159,7 @@ class Timer extends Component {
         <StartButton type="button" onClick={this.changeTimer}>
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
-        <Card>
-          <h3>{brewSteps[stage].StepTitle}</h3>
-          <img
-            src={require(`../assets/images/${brewSteps[stage].SvgPath}.svg`)}
-            alt={brewSteps[stage].SvgPath}
-          />
-          <h3>{brewSteps[stage].SubText}</h3>
-        </Card>
+        <CardCarousel brewSteps={brewSteps} stage={stage} blinking={blinking} />
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
         </StartButton>
@@ -156,21 +169,6 @@ class Timer extends Component {
 }
 
 export default Timer;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto;
-  margin-top: 24px;
-  padding: 10px;
-  width: 300px;
-  height: auto;
-  background-color: #f3f1ee;
-  color: #2f2923;
-  border-radius: 10px;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-`;
 
 const TimerText = styled.h1`
   font-size: 50px;
