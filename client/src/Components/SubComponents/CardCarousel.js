@@ -4,7 +4,7 @@ import styled, { keyframes, css } from 'styled-components';
 class CardCarousel extends Component {
 
   getOrder = (itemIndex) => {
-    const { brewSteps, stage } = this.props;
+    const { brewSteps, stage, blinking } = this.props;
 
     const numItems = brewSteps.length || 1;
 
@@ -14,24 +14,12 @@ class CardCarousel extends Component {
     return itemIndex - stage;
   };
 
-  doSliding = () => {
-    this.setState({
-      sliding: true,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        sliding: false
-      })
-    }, 50);
-  }
-
   render() {
-    const { brewSteps, blinking } = this.props;
+    const { brewSteps, stage, blinking, sliding } = this.props;
 
     return (
       <Wrapper>
-        <Carousel>
+        <Carousel sliding={sliding}>
           {brewSteps.map((step, index) => (
             <Card blinking={blinking} order={this.getOrder(index)}>
               <h3>{step.StepTitle}</h3>
@@ -51,16 +39,20 @@ class CardCarousel extends Component {
 export default CardCarousel;
 
 const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 `;
 
 const Carousel = styled.div`
   display: inline-flex;
   align-items: flex-start;
   width: 380px;
-  overflow: hidden;
+  transition: ${props => props.sliding ? `none` : `transform 1s ease`};
+  transform: ${props => props.sliding ? `translateX(0%)` : `translateX(-100%)`};
 `;
 
 const blink = keyframes`

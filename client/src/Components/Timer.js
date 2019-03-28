@@ -12,6 +12,7 @@ class Timer extends Component {
     stage: 0,
     finishedBrew: false,
     blinking: false,
+    sliding: false,
     brewSteps: [
       {
         id: 1,
@@ -128,11 +129,28 @@ class Timer extends Component {
   nextStep = () => {
     const { stage, brewSteps } = this.state;
     const numItems = brewSteps.length || 1;
+    this.doSliding();
 
     this.setState({
-      stage: stage === numItems - 1 ? stage : stage + 1,
-    })
+      stage: stage === numItems - 2 ? stage : stage + 1,
+    });
+  };
 
+  doSliding = () => {
+    const { stage, brewSteps } = this.state;
+    const numItems = brewSteps.length || 1;
+    if (stage != numItems - 2) {
+
+      this.setState({
+        sliding: true,
+      });
+
+      setTimeout(() => {
+        this.setState({
+          sliding: false,
+        });
+      }, 50);
+    }
   }
 
   finishBrew = async () => {
@@ -155,7 +173,7 @@ class Timer extends Component {
   };
 
   render() {
-    const { brewSteps, stage, timerStarted, finishedBrew, blinking } = this.state;
+    const { brewSteps, stage, timerStarted, finishedBrew, blinking, sliding } = this.state;
 
     if (finishedBrew === true) {
       return <Redirect push to="/journal" />
@@ -169,7 +187,7 @@ class Timer extends Component {
         <StartButton type="button" onClick={this.changeTimer}>
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
-        <CardCarousel brewSteps={brewSteps} stage={stage} blinking={blinking} />
+        <CardCarousel brewSteps={brewSteps} stage={stage} blinking={blinking} sliding={sliding} />
         <StartButton type="button" onClick={this.nextStep}>Next</StartButton>
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
