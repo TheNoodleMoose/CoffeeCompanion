@@ -125,6 +125,16 @@ class Timer extends Component {
     clearInterval(this.setIncrement);
   };
 
+  nextStep = () => {
+    const { stage, brewSteps } = this.state;
+    const numItems = brewSteps.length || 1;
+
+    this.setState({
+      stage: stage === numItems - 1 ? stage : stage + 1,
+    })
+
+  }
+
   finishBrew = async () => {
 
     const { userParameters } = this.props;
@@ -160,6 +170,7 @@ class Timer extends Component {
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
         <CardCarousel brewSteps={brewSteps} stage={stage} blinking={blinking} />
+        <StartButton type="button" onClick={this.nextStep}>Next</StartButton>
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
         </StartButton>
