@@ -38,13 +38,6 @@
         "isTimedStep": false
       },
       {
-        "id": 0,
-        "StepTitle": "I'm a buffer step",
-        "SvgPath": "Clock",
-        "SubText": "Enjoy!",
-        "isTimedStep": true
-      },
-      {
         "id": 1,
         "StepTitle": "Pour 50g of water",
         "SvgPath": "wetFilter",

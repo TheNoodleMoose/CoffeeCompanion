@@ -10,35 +10,9 @@ class Timer extends Component {
     timerStarted: false,
     timer: 0,
     stage: 0,
+    position: 0,
     finishedBrew: false,
     blinking: false,
-    sliding: false,
-    brewSteps: [
-      {
-        id: 1,
-        name: 'Do A Thing',
-        SvgPath: 'Kettle',
-        time: 5,
-      },
-      {
-        id: 2,
-        name: 'Do Another Thing',
-        SvgPath: 'Grinder',
-        time: 10,
-      },
-      {
-        id: 3,
-        name: 'Do The Last Thing',
-        SvgPath: 'wetFilter',
-        time: 15,
-      },
-      {
-        id: 4,
-        name: 'Enjoy Your Coffee!',
-        SvgPath: 'coarse_bean',
-        time: 20,
-      },
-    ],
   };
 
   Auth = new AuthHelperMethods();
@@ -68,17 +42,16 @@ class Timer extends Component {
 
   UpdateSteps = () => {
     const { brewSteps, stage, timer } = this.state;
-    if (timer === brewSteps[stage].time - 10) {
-      console.log('Timer is has 10 sec left')
+    if (timer >= brewSteps[stage].time - 10 && stage < brewSteps.length - 1) {
       this.setState({
         blinking: true,
       });
     }
 
     if (timer === brewSteps[stage].time && stage < brewSteps.length - 1) {
-      console.log(brewSteps[stage]);
       this.setState({
         stage: stage + 1,
+        position: stage + 1,
         blinking: false,
       });
     }
@@ -127,31 +100,21 @@ class Timer extends Component {
   };
 
   nextStep = () => {
-    const { stage, brewSteps } = this.state;
+    const { position, brewSteps } = this.state;
     const numItems = brewSteps.length || 1;
-    this.doSliding();
 
     this.setState({
-      stage: stage === numItems - 2 ? stage : stage + 1,
+      position: position === numItems - 1 ? position : position + 1,
     });
   };
 
-  doSliding = () => {
-    const { stage, brewSteps } = this.state;
-    const numItems = brewSteps.length || 1;
-    if (stage != numItems - 2) {
+  prevStep = () => {
+    const { position, brewSteps } = this.state;
 
-      this.setState({
-        sliding: true,
-      });
-
-      setTimeout(() => {
-        this.setState({
-          sliding: false,
-        });
-      }, 50);
-    }
-  }
+    this.setState({
+      position: position === 0 ? position : position - 1,
+    });
+  };
 
   finishBrew = async () => {
 
@@ -173,7 +136,7 @@ class Timer extends Component {
   };
 
   render() {
-    const { brewSteps, stage, timerStarted, finishedBrew, blinking, sliding } = this.state;
+    const { brewSteps, stage, timerStarted, finishedBrew, blinking, position } = this.state;
 
     if (finishedBrew === true) {
       return <Redirect push to="/journal" />
@@ -187,7 +150,8 @@ class Timer extends Component {
         <StartButton type="button" onClick={this.changeTimer}>
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
-        <CardCarousel brewSteps={brewSteps} stage={stage} blinking={blinking} sliding={sliding} />
+        <CardCarousel position={position} brewSteps={brewSteps} stage={stage} blinking={blinking} nextStep={this.nextStep} prevStep={this.prevStep} />
+        <StartButton type="button" onClick={this.prevStep}>Previous</StartButton>
         <StartButton type="button" onClick={this.nextStep}>Next</StartButton>
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
