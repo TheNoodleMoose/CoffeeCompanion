@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import AuthHelperMethods from '../services/AuthenticationService';
 
 /* A higher order component is frequently written as a function that returns a class. */
@@ -6,6 +7,10 @@ export default function withAuth(AuthComponent) {
   const Auth = new AuthHelperMethods();
 
   return class AuthWrapped extends Component {
+    static propTypes = {
+      history: ReactRouterPropTypes.history,
+    };
+
     state = {
       confirm: null,
       loaded: false,

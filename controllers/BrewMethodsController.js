@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 const brewstepsJSON = require('../BrewSteps.json');
 
 module.exports = {
@@ -13,14 +13,21 @@ module.exports = {
   },
 
   async addBrewStep(req, res) {
-    const { BrewingMethod, StepTitle, SvgPath, SubText, isTimedStep, time } = req.body;
+    const {
+      BrewingMethod,
+      StepTitle,
+      SvgPath,
+      SubText,
+      isTimedStep,
+      time,
+    } = req.body;
     const brewStep = await db.BrewStep.create({
       BrewingMethod,
       StepTitle,
       SvgPath,
       SubText,
       isTimedStep,
-      time
+      time,
     });
 
     res.json(brewStep);
@@ -29,7 +36,9 @@ module.exports = {
   async searchBrewSteps(req, res) {
     const { BrewMethod } = req.body;
 
-    const brewSteps = brewstepsJSON[BrewMethod].steps.filter(step => step.isTimedStep === false);
+    const brewSteps = brewstepsJSON[BrewMethod].steps.filter(
+      step => step.isTimedStep === false
+    );
     // const brewSteps = await db.BrewMethod.findOne({
     //   where: {
     //     name: BrewMethod,
@@ -48,7 +57,9 @@ module.exports = {
   async searchTimeBrewSteps(req, res) {
     const { BrewMethod } = req.body;
 
-    const brewSteps = brewstepsJSON[BrewMethod].steps.filter(step => step.isTimedStep === true);
+    const brewSteps = brewstepsJSON[BrewMethod].steps.filter(
+      step => step.isTimedStep === true
+    );
 
     // const brewSteps = await db.BrewMethod.findOne({
     //   where: {

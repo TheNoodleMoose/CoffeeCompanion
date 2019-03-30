@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import AuthHelperFunctions from '../services/AuthenticationService';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
+    loggedIn: false,
   };
 
   Auth = new AuthHelperFunctions();
 
   componentWillMount() {
-    const { history } = this.props;
     if (this.Auth.loggedIn() === true) {
-      history.replace('/Brewing');
+      this.setState({
+        loggedIn: true,
+      });
     }
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { value, name } = event.target;
 
     this.setState({
@@ -26,31 +28,38 @@ class Login extends Component {
     });
   };
 
-  submitForm = async (event) => {
+  submitForm = async event => {
     event.preventDefault();
 
     const { email, password } = this.state;
-    const { history } = this.props;
 
     const res = await this.Auth.login(email, password);
     if (res.success === true) {
-      history.push('/Brewing');
+      this.setState({
+        loggedIn: true,
+      });
     }
   };
 
   render() {
-    const { submitFakeForm } = this.props;
-    const { email, password } = this.state;
+    const { email, password, loggedIn } = this.state;
+
+    if (loggedIn === true) {
+      return <Redirect push to="/Brewing" />;
+    }
 
     return (
       <div>
-        <CoffeeImage src="https://img.icons8.com/cotton/64/000000/cup.png" alt="coffee-mug" />
+        <CoffeeImage
+          src="https://img.icons8.com/cotton/64/000000/cup.png"
+          alt="coffee-mug"
+        />
         <Card>
           <h1>Log In</h1>
           <Form
             data-testid="login-form"
             // For Testing Switch || to &&
-            onSubmit={this.submitForm || (() => submitFakeForm({ email, password }))}
+            onSubmit={this.submitForm}
           >
             <InputField htmlFor="email">
               Email

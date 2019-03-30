@@ -1,11 +1,22 @@
+/* eslint-disable no-eval */
 import React, { Component } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AuthHelperMethods from '../services/AuthenticationService';
 import CardCarousel from './SubComponents/CardCarousel';
 
 class Timer extends Component {
+  static propTypes = {
+    userParameters: PropTypes.shape({
+      grindSize: PropTypes.string.isRequired,
+      coffeeInput: PropTypes.string.isRequired,
+      coffeeStrength: PropTypes.string.isRequired,
+    }),
+    steps: PropTypes.arrayOf(PropTypes.object),
+  };
+
   state = {
     timerStarted: false,
     timer: 0,
@@ -13,14 +24,20 @@ class Timer extends Component {
     position: 0,
     finishedBrew: false,
     blinking: false,
+    brewSteps: [],
   };
 
   Auth = new AuthHelperMethods();
 
   componentWillMount() {
-    const newSteps = this.props.steps.map((step) => {
+    const {
+      // eslint-disable-next-line no-unused-vars
+      userParameters: { grindSize, coffeeInput, coffeeStrength },
+      steps,
+    } = this.props;
+
+    const newSteps = steps.map(step => {
       const { StepTitle, SubText } = step;
-      const { grindSize, coffeeOutput, coffeeStrength } = this.props.userParameters;
 
       const newStep = {
         ...step,
@@ -109,7 +126,7 @@ class Timer extends Component {
   };
 
   prevStep = () => {
-    const { position, brewSteps } = this.state;
+    const { position } = this.state;
 
     this.setState({
       position: position === 0 ? position : position - 1,
@@ -117,7 +134,6 @@ class Timer extends Component {
   };
 
   finishBrew = async () => {
-
     const { userParameters } = this.props;
     const { timer } = this.state;
     const user = this.Auth.getConfirm();
@@ -131,15 +147,22 @@ class Timer extends Component {
     if (data) {
       this.setState({
         finishedBrew: true,
-      })
+      });
     }
   };
 
   render() {
-    const { brewSteps, stage, timerStarted, finishedBrew, blinking, position } = this.state;
+    const {
+      brewSteps,
+      stage,
+      timerStarted,
+      finishedBrew,
+      blinking,
+      position,
+    } = this.state;
 
     if (finishedBrew === true) {
-      return <Redirect push to="/journal" />
+      return <Redirect push to="/journal" />;
     }
 
     return (
@@ -150,9 +173,20 @@ class Timer extends Component {
         <StartButton type="button" onClick={this.changeTimer}>
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
-        <CardCarousel position={position} brewSteps={brewSteps} stage={stage} blinking={blinking} nextStep={this.nextStep} prevStep={this.prevStep} />
-        <StartButton type="button" onClick={this.prevStep}>Previous</StartButton>
-        <StartButton type="button" onClick={this.nextStep}>Next</StartButton>
+        <CardCarousel
+          position={position}
+          brewSteps={brewSteps}
+          stage={stage}
+          blinking={blinking}
+          nextStep={this.nextStep}
+          prevStep={this.prevStep}
+        />
+        <StartButton type="button" onClick={this.prevStep}>
+          Previous
+        </StartButton>
+        <StartButton type="button" onClick={this.nextStep}>
+          Next
+        </StartButton>
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
         </StartButton>

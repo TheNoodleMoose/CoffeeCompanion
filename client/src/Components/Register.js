@@ -9,17 +9,20 @@ class Register extends Component {
     name: '',
     email: '',
     password: '',
+    loggedIn: false,
   };
 
   Auth = new AuthHelperMethods();
 
   componentWillMount() {
     if (this.Auth.loggedIn() === true) {
-      this.props.history.replace('/Brewing');
+      this.setState({
+        loggedIn: true,
+      });
     }
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { value, name } = event.target;
 
     this.setState({
@@ -27,7 +30,7 @@ class Register extends Component {
     });
   };
 
-  submitForm = async (event) => {
+  submitForm = async event => {
     event.preventDefault();
 
     const { name, email, password } = this.state;
@@ -41,32 +44,36 @@ class Register extends Component {
     if (success === true) {
       const res = await this.Auth.login(email, password);
       if (res.success === true) {
-        this.props.history.push('/Brewing');
+        this.setState({
+          loggedIn: true,
+        });
       }
     }
   };
 
   render() {
-    const { submitFakeForm } = this.props;
-    const {
-      email, password, name, redirect,
-    } = this.state;
-    if (redirect) {
+    const { email, password, name, loggedIn } = this.state;
+    if (loggedIn === true) {
       return <Redirect push to="/Brewing" />;
     }
     return (
       <div>
-        <CoffeeImage src="https://img.icons8.com/cotton/64/000000/cup.png" alt="coffee-mug" />
+        <CoffeeImage
+          src="https://img.icons8.com/cotton/64/000000/cup.png"
+          alt="coffee-mug"
+        />
         <Card>
           <h1>Sign Up</h1>
-          <Form
-            data-testid="login-form"
-            // For Testing Switch || to &&
-            onSubmit={this.submitForm || (() => submitFakeForm({ email, password }))}
-          >
+          <Form data-testid="login-form" onSubmit={this.submitForm}>
             <InputField htmlFor="name">
               Name
-              <Input id="name" value={name} name="name" onChange={this.handleChange} type="text" />
+              <Input
+                id="name"
+                value={name}
+                name="name"
+                onChange={this.handleChange}
+                type="text"
+              />
             </InputField>
             <InputField htmlFor="email">
               Email

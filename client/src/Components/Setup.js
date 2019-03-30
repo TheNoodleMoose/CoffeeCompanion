@@ -1,13 +1,32 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+/* eslint-disable no-eval */
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 class Setup extends Component {
+  static propTypes = {
+    userParameters: PropTypes.shape({
+      grindSize: PropTypes.string.isRequired,
+      coffeeInput: PropTypes.string.isRequired,
+      coffeeStrength: PropTypes.string.isRequired,
+    }),
+    steps: PropTypes.arrayOf(PropTypes.object),
+    handleSetupState: PropTypes.func,
+  };
+
   state = {};
 
   componentWillMount() {
-    const newSteps = this.props.steps.map((step) => {
+    const {
+      // eslint-disable-next-line no-unused-vars
+      userParameters: { grindSize, coffeeInput, coffeeStrength },
+      steps,
+    } = this.props;
+
+    const newSteps = steps.map(step => {
       const { StepTitle, SubText } = step;
-      const { grindSize, coffeeInput, coffeeStrength } = this.props.userParameters;
 
       const newStep = {
         ...step,
@@ -21,24 +40,29 @@ class Setup extends Component {
     });
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = event => {
     event.preventDefault();
     const { handleSetupState } = this.props;
     handleSetupState();
   };
 
   render() {
-    const { steps, usersBrewMethod } = this.state;
-    const { brewMethod } = this.props.userParameters;
+    const { steps } = this.state;
+    const {
+      userParameters: { brewMethod },
+    } = this.props;
     return (
       <div>
         <h3>Setup: {brewMethod}</h3>
         {steps.map(step => (
           <Card key={step.id}>
             <h3>{step.StepTitle}</h3>
-            <img src={require(`../assets/images/${step.SvgPath}.svg`)} alt={step.SvgPath} />
+            <img
+              src={require(`../assets/images/${step.SvgPath}.svg`)}
+              alt={step.SvgPath}
+            />
             <h3>{step.SubText}</h3>
           </Card>
         ))}

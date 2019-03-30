@@ -1,24 +1,55 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 const JournalCard = ({ entry }) => {
   const {
-    Coffee, Roaster, BrewMethod, GrindSize, CoffeeIn, CoffeeOut, BrewTime, createdAt, CoffeeOunces,
+    Coffee,
+    Roaster,
+    BrewMethod,
+    GrindSize,
+    CoffeeIn,
+    CoffeeOut,
+    BrewTime,
+    createdAt,
+    CoffeeOunces,
   } = entry;
 
   return (
     <Container>
       <Card>
-        <CoffeeText>{Coffee} ({Roaster})</CoffeeText>
-        <BrewMethodText>{BrewMethod} ({CoffeeOunces}oz)</BrewMethodText>
+        <CoffeeText>
+          {Coffee} ({Roaster})
+        </CoffeeText>
+        <BrewMethodText>
+          {BrewMethod} ({CoffeeOunces}oz)
+        </BrewMethodText>
         <GrindSizeText>{GrindSize}</GrindSizeText>
-        <CoffeeGramText>{CoffeeIn}g / {CoffeeOut}g</CoffeeGramText>
-        <BrewTimeText>{Math.floor(BrewTime / 60)}:{`0${BrewTime % 60}`.slice(-2)}</BrewTimeText>
+        <CoffeeGramText>
+          {CoffeeIn}g / {CoffeeOut}g
+        </CoffeeGramText>
+        <BrewTimeText>
+          {Math.floor(BrewTime / 60)}:{`0${BrewTime % 60}`.slice(-2)}
+        </BrewTimeText>
         <DateText>{moment(createdAt).format('ddd, MMM DD')}</DateText>
       </Card>
     </Container>
   );
+};
+
+JournalCard.propTypes = {
+  entry: PropTypes.shape({
+    Coffee: PropTypes.string,
+    Roaster: PropTypes.string,
+    BrewMethod: PropTypes.string,
+    GrindSize: PropTypes.string,
+    CoffeeIn: PropTypes.number,
+    CoffeeOut: PropTypes.number,
+    BrewTime: PropTypes.number,
+    createdAt: PropTypes.string,
+    CoffeeOunces: PropTypes.string,
+  }),
 };
 
 export default JournalCard;
@@ -36,9 +67,9 @@ const Card = styled.div`
   width: 95%;
   height: 115px;
   margin-bottom: 24px;
-  background: #F3F1EE;
+  background: #f3f1ee;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-  border-radius: 5px
+  border-radius: 5px;
 `;
 
 const BrewMethodText = styled.h1`

@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  var JournalEntry = sequelize.define("JournalEntry", {
+module.exports = function(sequelize, DataTypes) {
+  const JournalEntry = sequelize.define('JournalEntry', {
     // The email cannot be null, and must be a proper email before creation
     userEmail: {
       type: DataTypes.STRING,
@@ -35,11 +35,11 @@ module.exports = function (sequelize, DataTypes) {
     CoffeeOunces: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
   });
 
-  JournalEntry.associate = function (models) {
-    JournalEntry.belongsTo(models.User, { foreignKey: "email" });
+  JournalEntry.associate = function(models) {
+    JournalEntry.belongsTo(models.User, { foreignKey: 'email' });
   };
 
   return JournalEntry;

@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  var BrewStep = sequelize.define("BrewStep", {
+module.exports = function(sequelize, DataTypes) {
+  const BrewStep = sequelize.define('BrewStep', {
     // The email cannot be null, and must be a proper email before creation
     BrewingMethod: {
       type: DataTypes.INTEGER,
@@ -23,10 +23,10 @@ module.exports = function (sequelize, DataTypes) {
     },
     time: {
       type: DataTypes.INTEGER,
-    }
+    },
   });
 
-  BrewStep.associate = function (models) {
+  BrewStep.associate = function(models) {
     BrewStep.belongsTo(models.BrewMethod);
   };
 
