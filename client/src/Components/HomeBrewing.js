@@ -12,7 +12,7 @@ class HomeBrew extends Component {
     userParameters: {},
   };
 
-  handleParameterState = async (props) => {
+  handleParameterState = async props => {
     const Steps = await axios.post('/getsteps', {
       BrewMethod: props.brewMethod,
     });
@@ -26,7 +26,9 @@ class HomeBrew extends Component {
   };
 
   handleSetupState = async () => {
-    const { brewMethod } = this.state.userParameters;
+    const {
+      userParameters: { brewMethod },
+    } = this.state;
     const Steps = await axios.post('/gettimesteps', {
       BrewMethod: brewMethod,
     });
@@ -39,23 +41,26 @@ class HomeBrew extends Component {
 
   render() {
     const {
-      CoffeeParameters, SetupComplete, steps, timeSteps,
+      CoffeeParameters,
+      SetupComplete,
+      steps,
+      timeSteps,
+      userParameters,
     } = this.state;
-    const { history } = this.props;
 
     if (SetupComplete) {
-      return <Timer steps={timeSteps.data} userParameters={this.state.userParameters} />;
+      return <Timer steps={timeSteps.data} userParameters={userParameters} />;
     }
     if (CoffeeParameters) {
       return (
         <Setup
           handleSetupState={this.handleSetupState}
           steps={steps.data}
-          userParameters={this.state.userParameters}
+          userParameters={userParameters}
         />
       );
     }
-    return <Brewing handleParameterState={this.handleParameterState} history={history} />;
+    return <Brewing handleParameterState={this.handleParameterState} />;
   }
 }
 

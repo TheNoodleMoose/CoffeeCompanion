@@ -19,7 +19,7 @@ export default class AuthHelperMethods {
     return !!token && !this.isTokenExpired(token); // handwaiving here
   };
 
-  isTokenExpired = (token) => {
+  isTokenExpired = token => {
     try {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -33,7 +33,7 @@ export default class AuthHelperMethods {
     }
   };
 
-  setToken = (idToken) => {
+  setToken = idToken => {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken);
   };
@@ -72,7 +72,7 @@ export default class AuthHelperMethods {
       .then(response => response.json());
   };
 
-  checkStatus = (response) => {
+  checkStatus = response => {
     // raises an error in case response status is not a success
     if (response.status >= 200 && response.status < 300) {
       // Success status lies between 200 to 300

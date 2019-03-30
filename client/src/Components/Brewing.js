@@ -1,10 +1,19 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import coarseBean from '../assets/images/coarse_bean.svg';
 import AuthHelperMethods from '../services/AuthenticationService';
 
 class Brewing extends Component {
+  static propTypes = {
+    handleParameterState: PropTypes.func,
+  };
+
   state = {
     parameters: {
       country: '',
@@ -14,22 +23,15 @@ class Brewing extends Component {
       coffeeOutput: '12',
       coffeeStrength: '15',
       grindSize: '',
+      loggedOut: false,
     },
     brewMethods: [
       {
         id: 1,
-        name: 'Chemex',
+        name: 'Pour Over',
       },
       {
         id: 2,
-        name: 'Hario V60',
-      },
-      {
-        id: 3,
-        name: 'Kalita Wave',
-      },
-      {
-        id: 4,
         name: 'French Press',
       },
     ],
@@ -90,22 +92,22 @@ class Brewing extends Component {
     });
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const { value, name } = event.target;
-    const { coffeeOutput, coffeeStrength } = this.state.parameters;
+    const { parameters } = this.state;
     this.setState({
       parameters: {
-        ...this.state.parameters,
+        ...parameters,
         [name]: value,
       },
     });
   };
 
-  handleChangeHorizontal = (value) => {
-    const { coffeeOutput, coffeeStrength } = this.state.parameters;
+  handleChangeHorizontal = value => {
+    const { parameters } = this.state;
     this.setState({
       parameters: {
-        ...this.state.parameters,
+        ...parameters,
         coffeeStrength: value,
       },
     });
@@ -113,42 +115,61 @@ class Brewing extends Component {
 
   LogOut = () => {
     this.Auth.logout();
-    const { history } = this.props;
-    history.replace('/login');
+    this.setState({
+      loggedOut: true,
+    });
   };
 
   calcInput = (output, strength) => {
-    console.log(output, strength);
-    const coffeeInput = Math.floor((parseFloat(output) * 29.57) / parseFloat(strength));
+    const { parameters } = this.state;
+    const coffeeInput = Math.floor(
+      (parseFloat(output) * 29.57) / parseFloat(strength)
+    );
     console.log(coffeeInput);
     this.setState({
       parameters: {
-        ...this.state.parameters,
+        ...parameters,
         coffeeInput,
       },
     });
   };
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = event => {
     event.preventDefault();
-    const { coffeeOutput, coffeeStrength } = this.state.parameters;
+    const {
+      parameters,
+      parameters: { coffeeOutput, coffeeStrength },
+    } = this.state;
     const { handleParameterState } = this.props;
     this.calcInput(coffeeOutput, coffeeStrength);
     setTimeout(() => {
-      handleParameterState(this.state.parameters);
+      handleParameterState(parameters);
     }, 20);
   };
 
   render() {
     const {
-      brewMethods, username, parameters, brewAmount, grindSizes,
+      brewMethods,
+      username,
+      parameters,
+      brewAmount,
+      grindSizes,
+      loggedOut,
     } = this.state;
 
     const formatg = value => `${value} g`;
 
+    if (loggedOut === true) {
+      return <Redirect push to="/login" />;
+    }
+
     return (
       <div>
-        <LoginButton data-testid="login-button" type="button" onClick={this.LogOut}>
+        <LoginButton
+          data-testid="login-button"
+          type="button"
+          onClick={this.LogOut}
+        >
           Logout
         </LoginButton>
 
@@ -201,7 +222,10 @@ class Brewing extends Component {
                     type="radio"
                   />
                   <BrewMethodLabel htmlFor={method.id}>
-                    <img src="https://img.icons8.com/small/32/000000/temperature.png" alt="temp" />
+                    <img
+                      src="https://img.icons8.com/small/32/000000/temperature.png"
+                      alt="temp"
+                    />
                     <span>{method.name}</span>
                   </BrewMethodLabel>
                 </div>
@@ -227,7 +251,9 @@ class Brewing extends Component {
                   />
                   <BrewAmountLabel htmlFor={amount.id}>
                     <img
-                      src={require(`../assets/images/${amount.amount}OzCup.svg`)}
+                      src={require(`../assets/images/${
+                        amount.amount
+                      }OzCup.svg`)}
                       alt="coffee-mug-amount"
                     />
                   </BrewAmountLabel>
@@ -265,7 +291,7 @@ class Brewing extends Component {
               alt="question-country"
             />
             <h3>How fine are we grinding this?</h3>
-            <img src={require('../assets/images/coarse_bean.svg')} alt="coffee-bean" />
+            <img src={coarseBean} alt="coffee-bean" />
             <GrindSizeContainer>
               {grindSizes.map(grindSize => (
                 <div key={grindSize.id}>

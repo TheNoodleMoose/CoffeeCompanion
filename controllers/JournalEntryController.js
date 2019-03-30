@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require('../models');
 
 module.exports = {
   async addJournalEntry(req, res) {
@@ -13,7 +13,7 @@ module.exports = {
       BrewTime: timer,
       CoffeeIn: userParameters.coffeeInput,
       CoffeeOut: Math.floor(parseInt(userParameters.coffeeOutput) * 29.57),
-      CoffeeOunces: userParameters.coffeeOutput
+      CoffeeOunces: userParameters.coffeeOutput,
     });
 
     res.json(journalEntry);
@@ -25,22 +25,27 @@ module.exports = {
       where: {
         userEmail,
       },
-      order: [
-        ['createdAt', 'DESC'],
-      ],
-    })
+      order: [['createdAt', 'DESC']],
+    });
     res.json(entries);
   },
 
   async addBrewStep(req, res) {
-    const { BrewingMethod, StepTitle, SvgPath, SubText, isTimedStep, time } = req.body;
+    const {
+      BrewingMethod,
+      StepTitle,
+      SvgPath,
+      SubText,
+      isTimedStep,
+      time,
+    } = req.body;
     const brewStep = await db.BrewStep.create({
       BrewingMethod,
       StepTitle,
       SvgPath,
       SubText,
       isTimedStep,
-      time
+      time,
     });
 
     res.json(brewStep);
@@ -55,7 +60,7 @@ module.exports = {
       include: [
         {
           model: db.BrewStep,
-          where: { isTimedStep: false }
+          where: { isTimedStep: false },
         },
       ],
     });
@@ -72,7 +77,7 @@ module.exports = {
       include: [
         {
           model: db.BrewStep,
-          where: { isTimedStep: true }
+          where: { isTimedStep: true },
         },
       ],
     });

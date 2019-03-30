@@ -1,47 +1,43 @@
+/* eslint-disable no-eval */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AuthHelperMethods from '../services/AuthenticationService';
+import CardCarousel from './SubComponents/CardCarousel';
 
 class Timer extends Component {
+  static propTypes = {
+    userParameters: PropTypes.shape({
+      grindSize: PropTypes.string.isRequired,
+      coffeeInput: PropTypes.string.isRequired,
+      coffeeStrength: PropTypes.string.isRequired,
+    }),
+    steps: PropTypes.arrayOf(PropTypes.object),
+  };
+
   state = {
     timerStarted: false,
     timer: 0,
     stage: 0,
-    brewSteps: [
-      {
-        id: 1,
-        name: 'Do A Thing',
-        SvgPath: 'Kettle',
-        time: 5,
-      },
-      {
-        id: 2,
-        name: 'Do Another Thing',
-        SvgPath: 'Grinder',
-        time: 10,
-      },
-      {
-        id: 3,
-        name: 'Do The Last Thing',
-        SvgPath: 'wetFilter',
-        time: 15,
-      },
-      {
-        id: 4,
-        name: 'Enjoy Your Coffee!',
-        SvgPath: 'coarse_bean',
-        time: 20,
-      },
-    ],
+    position: 0,
+    finishedBrew: false,
+    blinking: false,
+    brewSteps: [],
   };
 
   Auth = new AuthHelperMethods();
 
   componentWillMount() {
-    const newSteps = this.props.steps.map((step) => {
+    const {
+      // eslint-disable-next-line no-unused-vars
+      userParameters: { grindSize, coffeeInput, coffeeStrength },
+      steps,
+    } = this.props;
+
+    const newSteps = steps.map(step => {
       const { StepTitle, SubText } = step;
-      const { grindSize, coffeeOutput, coffeeStrength } = this.props.userParameters;
 
       const newStep = {
         ...step,
@@ -61,16 +57,19 @@ class Timer extends Component {
     this.getSeconds();
   }
 
-  componentDidUpdate() {
-    this.UpdateSteps();
-  }
-
   UpdateSteps = () => {
     const { brewSteps, stage, timer } = this.state;
+    if (timer >= brewSteps[stage].time - 10 && stage < brewSteps.length - 1) {
+      this.setState({
+        blinking: true,
+      });
+    }
+
     if (timer === brewSteps[stage].time && stage < brewSteps.length - 1) {
-      console.log(brewSteps[stage]);
       this.setState({
         stage: stage + 1,
+        position: stage + 1,
+        blinking: false,
       });
     }
   };
@@ -86,6 +85,7 @@ class Timer extends Component {
       this.setState(prevState => ({
         timer: prevState.timer + 1,
       }));
+      this.UpdateSteps();
     }, 1000);
   };
 
@@ -116,8 +116,24 @@ class Timer extends Component {
     clearInterval(this.setIncrement);
   };
 
-  finishBrew = async () => {
+  nextStep = () => {
+    const { position, brewSteps } = this.state;
+    const numItems = brewSteps.length || 1;
 
+    this.setState({
+      position: position === numItems - 1 ? position : position + 1,
+    });
+  };
+
+  prevStep = () => {
+    const { position } = this.state;
+
+    this.setState({
+      position: position === 0 ? position : position - 1,
+    });
+  };
+
+  finishBrew = async () => {
     const { userParameters } = this.props;
     const { timer } = this.state;
     const user = this.Auth.getConfirm();
@@ -126,11 +142,29 @@ class Timer extends Component {
       userParameters,
       timer,
       user,
-    })
+    });
+
+    if (data) {
+      this.setState({
+        finishedBrew: true,
+      });
+    }
   };
 
   render() {
-    const { brewSteps, stage, timerStarted } = this.state;
+    const {
+      brewSteps,
+      stage,
+      timerStarted,
+      finishedBrew,
+      blinking,
+      position,
+    } = this.state;
+
+    if (finishedBrew === true) {
+      return <Redirect push to="/journal" />;
+    }
+
     return (
       <div>
         <TimerText>
@@ -139,14 +173,20 @@ class Timer extends Component {
         <StartButton type="button" onClick={this.changeTimer}>
           {timerStarted ? 'Stop' : 'Start'}
         </StartButton>
-        <Card>
-          <h3>{brewSteps[stage].StepTitle}</h3>
-          <img
-            src={require(`../assets/images/${brewSteps[stage].SvgPath}.svg`)}
-            alt={brewSteps[stage].SvgPath}
-          />
-          <h3>{brewSteps[stage].SubText}</h3>
-        </Card>
+        <CardCarousel
+          position={position}
+          brewSteps={brewSteps}
+          stage={stage}
+          blinking={blinking}
+          nextStep={this.nextStep}
+          prevStep={this.prevStep}
+        />
+        <StartButton type="button" onClick={this.prevStep}>
+          Previous
+        </StartButton>
+        <StartButton type="button" onClick={this.nextStep}>
+          Next
+        </StartButton>
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
         </StartButton>
@@ -156,21 +196,6 @@ class Timer extends Component {
 }
 
 export default Timer;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 auto;
-  margin-top: 24px;
-  padding: 10px;
-  width: 300px;
-  height: auto;
-  background-color: #f3f1ee;
-  color: #2f2923;
-  border-radius: 10px;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-`;
 
 const TimerText = styled.h1`
   font-size: 50px;
