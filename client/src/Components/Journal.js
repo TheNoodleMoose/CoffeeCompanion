@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import AuthHelperMethods from '../services/AuthenticationService';
 import axios from 'axios';
+import AuthHelperMethods from '../services/AuthenticationService';
 import JournalCard from './SubComponents/JournalCard';
 
 class Journal extends Component {
-  state = {}
+  state = {};
 
-  Auth = new AuthHelperMethods;
+  Auth = new AuthHelperMethods();
 
   componentWillMount() {
     const userInfo = this.Auth.getConfirm();
@@ -14,16 +14,16 @@ class Journal extends Component {
       email: userInfo.email,
       entries: [],
     });
-  };
+  }
 
   async componentDidMount() {
     const { email } = this.state;
     const entries = await axios.get(`/journal/${email}`);
     this.setState({
       entries: entries.data,
-    })
+    });
     console.log(this.state);
-  };
+  }
 
   render() {
     const { entries } = this.state;
@@ -32,10 +32,9 @@ class Journal extends Component {
       <div>
         <h1>Journal</h1>
         <div>
-          {this.state.entries.map(entry =>
+          {entries.map(entry => (
             <JournalCard entry={entry} key={entry.createdAt} />
-          )
-          }
+          ))}
         </div>
       </div>
     );
