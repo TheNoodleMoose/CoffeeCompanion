@@ -12,7 +12,7 @@ class Timer extends Component {
     userParameters: PropTypes.shape({
       grindSize: PropTypes.string.isRequired,
       coffeeInput: PropTypes.number.isRequired,
-      coffeeStrength: PropTypes.string.isRequired,
+      coffeeStrength: PropTypes.number.isRequired,
     }),
     steps: PropTypes.arrayOf(PropTypes.object),
   };
