@@ -6,7 +6,7 @@
         "id": 1,
         "StepTitle": "Boil some water",
         "SvgPath": "Kettle",
-        "SubText": "The water should be around 200\u00B0F jfkdls;jafkdsaj;fkldsjakl;j",
+        "SubText": "The water should be around 200\u00B0F",
         "isTimedStep": false
       },
       {
@@ -47,11 +47,11 @@
       },
       {
         "id": 2,
-        "StepTitle": "Let stand for ~30 seconds",
+        "StepTitle": "Let stand for ~15 seconds",
         "SvgPath": "Clock",
         "SubText": "We're letting the coffee release it's gas",
         "isTimedStep": true,
-        "time": 45
+        "time": 30
       },
       {
         "id": 3,
@@ -63,27 +63,11 @@
       },
       {
         "id": 4,
-        "StepTitle": "Wait until the water level drops roughly an inch",
-        "SvgPath": "Clock",
-        "SubText": "It's always a great time to have coffee!",
-        "isTimedStep": true,
-        "time": 80
-      },
-      {
-        "id": 5,
-        "StepTitle": "Pour until you've reached ${Math.floor(coffeeOutput * 29.57)}g of water",
-        "SvgPath": "wetFilter",
-        "SubText": "Avoid hitting the walls of your filter",
-        "isTimedStep": true,
-        "time": 110
-      },
-      {
-        "id": 6,
         "StepTitle": "Wait until the water stops dripping",
         "SvgPath": "Clock",
         "SubText": "Stop the timer when it's finished",
         "isTimedStep": true,
-        "time": 125
+        "time": 130
       }
     ]
   },
