@@ -119,15 +119,15 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const Carousel = styled.div`
+const Carousel = styled.div.attrs({
+  style: ({ position, drag }) =>
+    `transform: translateX(calc(-${100 * position}% + ${drag}px))`,
+})`
   display: inline-flex;
   align-items: flex-start;
   width: 380px;
   transition: ${props =>
     !props.locked ? `transform 1s ease` : `transform .01s linear`};
-  transform: translateX(
-    calc(-${props => 100 * props.position}% + ${props => props.drag}px)
-  );
 `;
 
 const blink = keyframes`

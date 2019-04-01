@@ -12,15 +12,16 @@ class HomeBrew extends Component {
     userParameters: {},
   };
 
-  handleParameterState = async props => {
+  handleParameterState = async (props, input) => {
+    console.log(props);
+    const userParameters = { ...props, coffeeInput: input };
+    console.log(userParameters);
     const Steps = await axios.post('/getsteps', {
       BrewMethod: props.brewMethod,
     });
-    console.log(props);
-    console.log(Steps);
     this.setState({
       CoffeeParameters: true,
-      userParameters: props,
+      userParameters,
       steps: Steps,
     });
   };
