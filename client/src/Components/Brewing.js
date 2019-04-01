@@ -19,9 +19,8 @@ class Brewing extends Component {
       country: '',
       roaster: '',
       brewMethod: '',
-      coffeeInput: '',
       coffeeOutput: '12',
-      coffeeStrength: '15',
+      coffeeStrength: 15,
       grindSize: '',
       loggedOut: false,
     },
@@ -29,10 +28,12 @@ class Brewing extends Component {
       {
         id: 1,
         name: 'Pour Over',
+        grindSize: 'Medium',
       },
       {
         id: 2,
         name: 'French Press',
+        grindSize: 'Coarse',
       },
     ],
     brewAmount: [
@@ -103,6 +104,21 @@ class Brewing extends Component {
     });
   };
 
+  handleBrewMethodChange = event => {
+    const { value, name } = event.target;
+    const { parameters } = this.state;
+
+    const grindSize = event.target.getAttribute('data');
+
+    this.setState({
+      parameters: {
+        ...parameters,
+        [name]: value,
+        grindSize,
+      },
+    });
+  };
+
   handleChangeHorizontal = value => {
     const { parameters } = this.state;
     this.setState({
@@ -121,30 +137,24 @@ class Brewing extends Component {
   };
 
   calcInput = (output, strength) => {
-    const { parameters } = this.state;
     const coffeeInput = Math.floor(
       (parseFloat(output) * 29.57) / parseFloat(strength)
     );
     console.log(coffeeInput);
-    this.setState({
-      parameters: {
-        ...parameters,
-        coffeeInput,
-      },
-    });
+    return coffeeInput;
   };
 
-  handleFormSubmit = event => {
+  handleFormSubmit = async event => {
     event.preventDefault();
     const {
       parameters,
       parameters: { coffeeOutput, coffeeStrength },
     } = this.state;
     const { handleParameterState } = this.props;
-    this.calcInput(coffeeOutput, coffeeStrength);
-    setTimeout(() => {
-      handleParameterState(parameters);
-    }, 20);
+
+    const coffeeInput = this.calcInput(coffeeOutput, coffeeStrength);
+
+    handleParameterState(parameters, coffeeInput);
   };
 
   render() {
@@ -218,8 +228,9 @@ class Brewing extends Component {
                     id={method.id}
                     value={method.name}
                     name="brewMethod"
-                    onClick={this.handleChange}
+                    onClick={this.handleBrewMethodChange}
                     type="radio"
+                    data={method.grindSize}
                   />
                   <BrewMethodLabel htmlFor={method.id}>
                     <img
@@ -293,21 +304,26 @@ class Brewing extends Component {
             <h3>How fine are we grinding this?</h3>
             <img src={coarseBean} alt="coffee-bean" />
             <GrindSizeContainer>
-              {grindSizes.map(grindSize => (
-                <div key={grindSize.id}>
-                  <GrindSizeButton
-                    id={grindSize.id}
-                    value={grindSize.grind}
-                    name="grindSize"
-                    onClick={this.handleChange}
-                    type="radio"
-                  />
-                  <GrindSizeLabel htmlFor={grindSize.id}>
-                    <span>{grindSize.grind}</span>
-                    <GrindText>{grindSize.text}</GrindText>
-                  </GrindSizeLabel>
-                </div>
-              ))}
+              {grindSizes.map(grindSize => {
+                const isChecked = grindSize.grind === parameters.grindSize;
+                return (
+                  <div key={grindSize.id}>
+                    <GrindSizeButton
+                      id={grindSize.id}
+                      value={grindSize.grind}
+                      name="grindSize"
+                      onClick={this.handleChange}
+                      type="radio"
+                      checked={isChecked}
+                      readOnly
+                    />
+                    <GrindSizeLabel htmlFor={grindSize.id}>
+                      <span>{grindSize.grind}</span>
+                      <GrindText>{grindSize.text}</GrindText>
+                    </GrindSizeLabel>
+                  </div>
+                );
+              })}
             </GrindSizeContainer>
           </Card>
           {/* Start Button */}

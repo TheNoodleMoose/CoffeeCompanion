@@ -11,7 +11,7 @@ class Timer extends Component {
   static propTypes = {
     userParameters: PropTypes.shape({
       grindSize: PropTypes.string.isRequired,
-      coffeeInput: PropTypes.string.isRequired,
+      coffeeInput: PropTypes.number.isRequired,
       coffeeStrength: PropTypes.string.isRequired,
     }),
     steps: PropTypes.arrayOf(PropTypes.object),
@@ -32,7 +32,7 @@ class Timer extends Component {
   componentWillMount() {
     const {
       // eslint-disable-next-line no-unused-vars
-      userParameters: { grindSize, coffeeInput, coffeeStrength },
+      userParameters: { grindSize, coffeeInput, coffeeStrength, coffeeOutput },
       steps,
     } = this.props;
 

@@ -9,8 +9,8 @@ class Setup extends Component {
   static propTypes = {
     userParameters: PropTypes.shape({
       grindSize: PropTypes.string.isRequired,
-      coffeeInput: PropTypes.string.isRequired,
-      coffeeStrength: PropTypes.string.isRequired,
+      coffeeInput: PropTypes.number.isRequired,
+      coffeeStrength: PropTypes.number.isRequired,
     }),
     steps: PropTypes.arrayOf(PropTypes.object),
     handleSetupState: PropTypes.func,
