@@ -181,12 +181,7 @@ class Timer extends Component {
           nextStep={this.nextStep}
           prevStep={this.prevStep}
         />
-        <StartButton type="button" onClick={this.prevStep}>
-          Previous
-        </StartButton>
-        <StartButton type="button" onClick={this.nextStep}>
-          Next
-        </StartButton>
+
         <StartButton type="button" onClick={this.finishBrew}>
           Finish
         </StartButton>

@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import coarseBean from '../assets/images/coarse_bean.svg';
 import AuthHelperMethods from '../services/AuthenticationService';
@@ -182,6 +182,9 @@ class Brewing extends Component {
         >
           Logout
         </LoginButton>
+        <Link to="/journal">
+          <LoginButton>Journal</LoginButton>
+        </Link>
 
         <h1 data-testid="users-intro">Hi {username}!</h1>
         <h1>Let&apos;s brew an awesome cup of coffee!</h1>
@@ -459,6 +462,9 @@ const LoginButton = styled.button`
   margin: 20px 0;
   width: 150px;
   height: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StartButton = styled.button`
@@ -471,6 +477,9 @@ const StartButton = styled.button`
   margin: 20px 0;
   width: 200px;
   height: 40px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const QuestionMark = styled.img`
