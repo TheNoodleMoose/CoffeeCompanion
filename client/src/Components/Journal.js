@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import AuthHelperMethods from '../services/AuthenticationService';
 import JournalCard from './SubComponents/JournalCard';
 
@@ -30,6 +32,9 @@ class Journal extends Component {
     console.log(entries);
     return (
       <div>
+        <Link to="/brewing">
+          <LoginButton>Brew Coffee</LoginButton>
+        </Link>
         <h1>Journal</h1>
         <div>
           {entries.map(entry => (
@@ -42,3 +47,18 @@ class Journal extends Component {
 }
 
 export default Journal;
+
+const LoginButton = styled.button`
+  background: #67615a;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  margin: 20px 0;
+  width: 150px;
+  height: 30px;
+  &:hover {
+    cursor: pointer;
+  }
+`;

@@ -48,7 +48,7 @@ JournalCard.propTypes = {
     CoffeeOut: PropTypes.number,
     BrewTime: PropTypes.number,
     createdAt: PropTypes.string,
-    CoffeeOunces: PropTypes.string,
+    CoffeeOunces: PropTypes.number,
   }),
 };
 
