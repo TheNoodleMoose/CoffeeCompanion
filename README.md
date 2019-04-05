@@ -1,68 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Coffee Companion
 
-## Available Scripts
+A home coffee brewing application built with React and Node.js. Guides users through the brewing process and without needing to understand the science behind coffee.
 
-In the project directory, you can run:
+## Guest Account
+You can login to test the live application with these credentials
 
-### `npm start`
+Email : __test@guest.com__
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Password : __12345678__
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+-------------
 
-### `npm test`
+## What I Learned
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Styled Components
+* Authentication with JWT
+* Higher Order Components
+* Working with a React Frontend and Node backend together.
+* Using a design tool like Figma to create SVG icons
 
-### `npm run build`
+---------------------------------------
+### __Asking the user how they'd like their coffee__
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+When you sign in the first screen will ask you several questions:
+* What coffee are you brewing
+* What Brew Method you are using __(after selecting the app will recommend a grind size and select one for you)__
+* How much coffee you'd like to drink
+* How strong do you like your coffee
+* What grindsize you'd like
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![user answering the brew questions](./assets/userQuestions.gif)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### __Setting up the brew__
 
-### `npm run eject`
+After taking in the users information the app will dynamically generate steps to set up the selected brew method based on the parameters given.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![steps to set up a pourover](./assets/setupSteps.gif)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### __Brewing the coffee__
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+When the user is ready to brew they will be given one step at a time, when the step is about to finish it will flash, indicating that it will be changing soon. This is all based on he overall brew time.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![The brew step changing to show the next](./assets/timer.gif)
 
-## Learn More
+The user can scroll through all of the steps at any point during the brew and the app will not lose track of where they're at. This is a custom built carousel using styled-components.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Scrolling through the brewing steps](./assets/carousel.gif)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### __Viewing past brews__
 
-### Code Splitting
+After clicking finsh on your brew you will be redirected to your journal. Here you can view all of your past brews with all of the parameters you selected. This is so that you can easily replicate a particular cup of coffee you enjoyed.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+![Looking at the journal](./assets/journal.png)
